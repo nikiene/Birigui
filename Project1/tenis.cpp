@@ -109,12 +109,17 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
 				done = true;
 			}
+
 			if (ev.keyboard.keycode == ALLEGRO_KEY_A) {
-				movementLeft(player);
+				if (player.x1 > 0) {
+					movementLeft(player);
+				}
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
-				movementRight(player);
+				if (player.x2 < width) {
+					movementRight(player);
+				}
 			}
 		}
 
