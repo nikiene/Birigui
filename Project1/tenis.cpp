@@ -22,7 +22,7 @@ struct Ball {
 	int raio;
 };
 
-
+//Assinatura de funções
 void initPlayer(Player& p);
 void initBot(Player& b);
 void drawPlayer(Player& p);
@@ -30,8 +30,13 @@ void movementLeft(Player& p);
 void movementRight(Player& p);
 void initBall(Ball& b);
 void drawBall(Ball& b);
-void moveBall(Ball& b, int direction);
+void moveBall(Ball& b);
 bool colide(Ball& b, Player& p, Player& bot);
+
+//Variáveis globais
+double aceleracao = 1;
+int ballXDirection = 1;
+int ballYDirection = 1;
 
 int main() {
 
@@ -45,7 +50,6 @@ int main() {
 	bool redraw = false;
 	bool toRight = false;
 	bool toLeft = true;
-	int ballDirection = 1;
 
 	Player player;
 	Player bot;
@@ -121,10 +125,8 @@ int main() {
 
 			//Movimentação da bola
 			if (ev.timer.source == ballTimer) {
-				moveBall(ball, ballDirection);
-				if (colide(ball, player, bot)) {
-					ballDirection *= -1;
-				}				
+				colide(ball, player, bot);
+				moveBall(ball);
 			}
 		}
 
@@ -202,37 +204,50 @@ void drawBall(Ball& b) {
 	al_draw_filled_circle(b.x, b.y, b.raio, al_map_rgb(255, 255, 255));
 }
 
-void moveBall(Ball& b, int direction) {
+void moveBall(Ball& b) {
 	al_draw_filled_circle(b.x, b.y, b.raio, al_map_rgb(0, 0, 0));
-	if (direction == 1) {
-		b.x += 20;
-		b.y += 10;
-	}
-	else {
-		b.x -= 20;
-		b.y -= 10;
-	}
+	int velocidade = 10;
+	b.x += ((velocidade / 4) * aceleracao) * ballXDirection;
+	b.y += (velocidade * aceleracao) * ballYDirection;
+	aceleracao += 0.001;
 }
 
 bool colide(Ball& ball, Player& player, Player& bot) {
+
+	//Colisão com o jogador
 	for (int i = 0; player.x1 + i <= player.x2; i++) {
 		if (ball.x == player.x1 + i && ball.y == player.y1) {
+			if (ball.x - player.x1 > player.x2 - ball.x)
+				ballXDirection *= -1;
+			
+
+			ballYDirection *= -1;
 			return true;
 		}
 	}
 
+	//Colisão com o bot
 	for (int i = 0; bot.x1 + i <= bot.x2; i++) {
 		if (ball.x == bot.x1 + i && ball.y == bot.y2) {
+			ballYDirection *= -1;
 			return true;
 		}
 	}
 
-	if ((ball.x == 0 || ball.y == 0) || (ball.x == width || ball.y == height)) {
-		printf("Ball - x: %d, y: %d", ball.x, ball.y);
+	//Colisão com os cantos
+	if (ball.x == width || ball.x == 0) {
+		ballXDirection *= -1;
+		printf("\nXColide -> Ball - x: %d, y: %d", ball.x, ball.y);
 		return true;
 	}
 
-	else { 
-		return false; 
+	/* Por algum motivo isso aqui não tá funcionando
+	if (ball.y == 0 || ball.y == height) {
+		ballYDirection *= -1;
+		printf("\nYColide -> Ball - x: %d, y: %d", ball.x, ball.y);
+		return true;
 	}
+	*/
+
+	return false; 
 }
