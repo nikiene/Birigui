@@ -223,23 +223,25 @@ void moveBall(Ball& b) {
 }
 
 bool colide(Ball& ball, Player& player, Player& bot) {
-
 	//Colisão com o jogador
-	for (int i = 1; i < (player.x2 - player.x1) - 1; i++) {
-		if (ball.x == player.x1 + i && ball.y >= player.y1) {
-			printf("\nplayer: colidiiu em x = %d", player.x1 + i);
-			//if (ball.x - player.x1 > player.x2 - ball.x)
-				//ballXDirection *= -1;
-			
+	for (int i = 1; i < (player.x2 - player.x1); i++) {
+		for (int j = 0; j < (player.y2 - player.y1) - 1; j++) {
+			if (ball.x == player.x1 + i && ball.y == player.y1 + j) {
+				printf("\nplayer: colidiiu em x = %d", player.x1 + i);
+				//if (ball.x - player.x1 > player.x2 - ball.x)
+					//ballXDirection *= -1;
 
-			ballYDirection *= -1;
-			return true;
+
+				ballYDirection *= -1;
+				return true;
+
+			}
 		}
 	}
-	
 	//Colisão com o bot
-	for (int i = 1; i < (bot.x2 - bot.x1) - 1; i++) {
-		if (ball.x == bot.x1 + i && ball.y <= bot.y2) {
+	for (int i = 1; i < (bot.x2 - bot.x1); i++) {
+		for(int j = 0; j < (bot.y2 - bot.y1) - 1; j++){
+		if (ball.x == bot.x1 + i && ball.y == bot.y1 + j) {
 			printf("\nbot: colidiiu em x = %d", bot.x1 + i);
 			//if (ball.x - bot.x1 > bot.x2 - ball.x)
 				//ballXDirection *= -1;
@@ -247,6 +249,7 @@ bool colide(Ball& ball, Player& player, Player& bot) {
 
 			ballYDirection *= -1;
 			return true;
+		}
 		}
 	}
 	//Colisão com os cantos
