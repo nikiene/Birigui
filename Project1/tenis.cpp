@@ -44,7 +44,7 @@ int main() {
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* ballTimer = NULL;
 	ALLEGRO_TIMER* botTimer = NULL;
-
+	ALLEGRO_TIMER* colideTimer = NULL;
 
 	bool done = false;
 	bool redraw = false;
@@ -80,6 +80,7 @@ int main() {
 	event_queue = al_create_event_queue();
 	ballTimer = al_create_timer(0.05);
 	botTimer = al_create_timer(0.2);
+	colideTimer = al_create_timer(0.05);
 
 	//Desenhando player e bot
 	drawPlayer(player);
@@ -91,9 +92,11 @@ int main() {
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(ballTimer));
 	al_register_event_source(event_queue, al_get_timer_event_source(botTimer));
+	al_register_event_source(event_queue, al_get_timer_event_source(colideTimer));
 
 	//Iniciando os timers
 	al_start_timer(ballTimer);
+	al_start_timer(colideTimer);
 	al_start_timer(botTimer);
 
 	while (!done) {
@@ -122,14 +125,16 @@ int main() {
 					}
 				}
 			}
-
 			//Movimentação da bola
 			if (ev.timer.source == ballTimer) {
-				colide(ball, player, bot);
 				moveBall(ball);
 			}
-		}
 
+			if (ev.timer.source == colideTimer) {
+				colide(ball, player, bot);
+			}
+
+		}
 		//Evento de tecla
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE) {
@@ -139,26 +144,33 @@ int main() {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_A) {
 				if (player.x1 > 0) {
 					movementLeft(player);
+					printf("\nplayer x1: %d", player.x1);
 				}
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
 				if (player.x2 < width) {
 					movementRight(player);
+					printf("\nplayer x1: %d", player.x1);
 				}
 			}
+			if (ev.keyboard.keycode == ALLEGRO_KEY_N) {
+				al_set_new_window_position(100, 100);
+			}
 		}
-
 		drawPlayer(player);
 		drawPlayer(bot);
 		drawBall(ball);
 		al_flip_display();
+		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}
-
 
 	//destroys
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
+	al_destroy_timer(colideTimer);
+	al_destroy_timer(botTimer);
+	al_destroy_timer(ballTimer);
 
 	return 0;
 }
@@ -185,13 +197,11 @@ void initBot(Player& b) {
 void movementLeft(Player& p) {
 	p.x1 -= 50;
 	p.x2 -= 50;
-	al_draw_filled_rectangle(p.x2, p.y1, p.x2 + 50, p.y2, al_map_rgb(0, 0, 0));
 }
 
 void movementRight(Player& p) {
 	p.x1 += 50;
 	p.x2 += 50;
-	al_draw_filled_rectangle(p.x1, p.y1, p.x1 - 50, p.y2, al_map_rgb(0, 0, 0));
 }
 
 void initBall(Ball& b) {
@@ -209,45 +219,48 @@ void moveBall(Ball& b) {
 	int velocidade = 10;
 	b.x += ((velocidade / 4) * aceleracao) * ballXDirection;
 	b.y += (velocidade * aceleracao) * ballYDirection;
-	aceleracao += 0.001;
+	aceleracao += 0.002;
 }
 
 bool colide(Ball& ball, Player& player, Player& bot) {
 
 	//Colisão com o jogador
-	for (int i = 0; player.x1 + i <= player.x2; i++) {
-		if (ball.x == player.x1 + i && ball.y == player.y1) {
-			if (ball.x - player.x1 > player.x2 - ball.x)
-				ballXDirection *= -1;
+	for (int i = 1; i < (player.x2 - player.x1) - 1; i++) {
+		if (ball.x == player.x1 + i && ball.y >= player.y1) {
+			printf("\nplayer: colidiiu em x = %d", player.x1 + i);
+			//if (ball.x - player.x1 > player.x2 - ball.x)
+				//ballXDirection *= -1;
 			
 
 			ballYDirection *= -1;
 			return true;
 		}
 	}
-
+	
 	//Colisão com o bot
-	for (int i = 0; bot.x1 + i <= bot.x2; i++) {
-		if (ball.x == bot.x1 + i && ball.y == bot.y2) {
+	for (int i = 1; i < (bot.x2 - bot.x1) - 1; i++) {
+		if (ball.x == bot.x1 + i && ball.y <= bot.y2) {
+			printf("\nbot: colidiiu em x = %d", bot.x1 + i);
+			//if (ball.x - bot.x1 > bot.x2 - ball.x)
+				//ballXDirection *= -1;
+
+
 			ballYDirection *= -1;
 			return true;
 		}
 	}
-
 	//Colisão com os cantos
-	if (ball.x == width || ball.x == 0) {
+	if (ball.x >= width || ball.x <= 0) {
 		ballXDirection *= -1;
-		printf("\nXColide -> Ball - x: %d, y: %d", ball.x, ball.y);
 		return true;
 	}
 
-	/* Por algum motivo isso aqui não tá funcionando
-	if (ball.y == 0 || ball.y == height) {
+	if (ball.y <= 0 || ball.y >= height) {
 		ballYDirection *= -1;
-		printf("\nYColide -> Ball - x: %d, y: %d", ball.x, ball.y);
+		ball.x = width / 2;
+		ball.y = height / 2;
 		return true;
 	}
-	*/
 
 	return false; 
 }
