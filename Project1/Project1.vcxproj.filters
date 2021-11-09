@@ -22,4 +22,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="tenis.h">
+      <Filter>Arquivos de Origem</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
