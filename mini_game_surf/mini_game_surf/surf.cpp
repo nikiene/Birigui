@@ -1,9 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_image.h>
 #include "objetos.h"
+#include "personagem.h"
+#include "mar.h"
+#include "colisao.h"
+#include "obstaculos.h"
 
 // --------------- VARIÁVEIS GLOBAIS --------------------
 const int LARGURA = 800;
@@ -13,38 +21,27 @@ const int QTD_OBSTACULOS = 50;
 enum TECLAS { CIMA, BAIXO, DIREITA, ESQUERDA };
 // ------------------------------------------------------
 
-// --------------- PROTÓTIPO DE FUNÇÕES -----------------
-// Personagem 
-void initPersonagem(personagem& personagemSurf);
-void desenhaPersonagem(personagem& personagemSurf);
-// Movimentação Personagem
-void personagemMoveCima(personagem& personagemSurf);
-void personagemMoveBaixo(personagem& personagemSurf);
-void personagemMoveEsquerda(personagem& personagemSurf);
-void personagemMoveDireira(personagem& personagemSurf);
-// Mar
-void initMar(mar& onda);
-void desenhaMar(mar& onda);
-// Obstáculos
-void initObstaculos(obstaculos vetorObstaculos[], int quantidade);
-void liberaObstaculos(obstaculos vetorObstaculos[], int quantidade);
-void moveObstaculos(obstaculos vetorObstaculos[], int quantidade);
-void desenhaObstaculos(obstaculos vetorObstaculos[], int quantidade);
-// Colisão
-void colidirObstaculos(obstaculos vetorObstaculos[], int quantidade, personagem& personagem_surf);
-// ------------------------------------------------------
+
 int main() // Função inicial
 {
+
+	int imagemLargura = 0;
+	int imagemAltura = 0;
+
 	// ------------- VARIÁVEIS DO JOGO ----------------------
 	// Cria a variável da fila de entos
 	ALLEGRO_EVENT_QUEUE *filaEventos = NULL; 
 	ALLEGRO_TIMER* timer = NULL;
+	ALLEGRO_BITMAP* imagem = NULL;
+	
+	
 	// -----------------------------------------------------
 	
 	// Variáveis para o loop principal
 	bool fim = false;
 	bool desenha = true;
 	bool teclas[] = { false, false, false, false }; // O enum será útil aqui. Onde, em vez de usar número para se obter o valor false, é usado os nomes que estão no enum.
+	
 	// -------------- INICIALIZAÇÃO DE OBJETOS ------------------
 	personagem personagemSurf;
 	obstaculos vetorObstaculos[QTD_OBSTACULOS];
@@ -76,6 +73,13 @@ int main() // Função inicial
 	al_init_primitives_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
+
+	al_init_image_addon();
+
+	imagem = al_load_bitmap("ceu.jpg");
+
+	imagemLargura = al_get_bitmap_width(imagem);
+	imagemAltura = al_get_bitmap_height(imagem);
 	// -----------------------------------------------------------------------------
 
 	// ----------------------- CRIAR FILA DE EVENTOS E DEMAIS DISPOSITIVOS ---------
@@ -169,22 +173,24 @@ int main() // Função inicial
 		if (desenha && al_is_event_queue_empty(filaEventos)) {
 			// -------------- DESENHO DO OBJETO ----------------
 			desenha = false;
-			
+
+
+			al_draw_bitmap(imagem, 0, 0, 0);
 			desenhaMar(onda);
 			desenhaPersonagem(personagemSurf);
 			desenhaObstaculos(vetorObstaculos, QTD_OBSTACULOS);
 
 
-		
 			// ------------------- MOSTRA NO DISPLAY E BACKBUFFER
-			
 			al_flip_display(); // Mostra o que é feito no display.
 			al_clear_to_color(al_map_rgb(0, 0, 0)); // Limpa o display a cada movimentação.
+			
 		}
 		
 	}
 
 	// --------------------- DESTRUIÇÃO DOS EVENTOS USADOS
+	al_destroy_bitmap(imagem);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(filaEventos);
@@ -194,7 +200,7 @@ int main() // Função inicial
 
 // ------------------------ FUNÇÕES ---------------------------------
 // Personagem
-void initPersonagem(personagem& personagemSurf) {
+void initPersonagem(personagem & personagemSurf) {
 	personagemSurf.ID = JOGADOR;
 	personagemSurf.posX = 20;
 	personagemSurf.posY = (ALTURA / 2) + (ALTURA / 4);
@@ -228,8 +234,8 @@ void personagemMoveEsquerda(personagem& personagemSurf) {
 }
 void personagemMoveDireira(personagem& personagemSurf) {
 	personagemSurf.posX += personagemSurf.velocidade;
-	
-	if (personagemSurf.posX + 30> LARGURA )
+
+	if (personagemSurf.posX + 30 > LARGURA)
 		personagemSurf.posX = LARGURA - 30;
 }
 

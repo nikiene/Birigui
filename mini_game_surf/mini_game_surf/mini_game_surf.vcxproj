@@ -169,7 +169,11 @@
     <ClCompile Include="surf.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="colisao.h" />
+    <ClInclude Include="mar.h" />
     <ClInclude Include="objetos.h" />
+    <ClInclude Include="obstaculos.h" />
+    <ClInclude Include="personagem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
