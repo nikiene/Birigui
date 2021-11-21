@@ -164,6 +164,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="constantes.cpp" />
+    <ClCompile Include="desenho.cpp" />
+    <ClCompile Include="definicao.cpp" />
+    <ClCompile Include="movimento.cpp" />
+    <ClCompile Include="boxe.cpp" />
+    <ClCompile Include="placar.cpp" />
+    <ClCompile Include="skate.cpp" />
+    <ClCompile Include="surf.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="tenis.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +181,7 @@
     <ClInclude Include="definicao.h" />
     <ClInclude Include="placar.h" />
     <ClInclude Include="movimento.h" />
+    <ClInclude Include="jogos.h" />
     <ClInclude Include="structs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

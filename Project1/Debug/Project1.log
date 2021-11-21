@@ -1,4 +1,2 @@
-﻿  tenis.cpp
-C:\Users\BK_St\source\repos\Birigui\Project1\movimento.h(38,12): warning C4477: 'printf': a cadeia de formato '%d' requer um argumento do tipo 'int', mas um argumento variadic 1 tem o tipo 'double'
-C:\Users\BK_St\source\repos\Birigui\Project1\tenis.cpp(62,68): warning C4554: '&': verifique a precedência de operador para possível erro; use parênteses para esclarecer a precedência
+﻿  main.cpp
   Project1.vcxproj -> C:\Users\BK_St\source\repos\Birigui\Project1\Debug\Project1.exe

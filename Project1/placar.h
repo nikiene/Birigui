@@ -1,16 +1,9 @@
 #pragma once
-int pontosBot = 0;
-int pontosPlayer = 0;
-int setsBot = 0;
-int setsPlayer = 0;
+extern int pontosBot;
+extern int pontosPlayer;
+extern int setsBot;
+extern int setsPlayer;
+extern bool keys[];
 
-void zeraPontuacao() {
-	pontosPlayer = 0;
-	pontosBot = 0;
-}
-
-void zeraPlacar() {
-	zeraPontuacao();
-	setsPlayer = 0;
-	setsBot = 0;
-}
+void zeraPontuacao();
+void zeraPlacar();

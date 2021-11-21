@@ -10,68 +10,6 @@
 #include "movimento.h"
 #include "structs.h"
 
-int tenis(ALLEGRO_DISPLAY* display);
-int teste(ALLEGRO_DISPLAY* display);
-
-int main() {
-	ALLEGRO_DISPLAY* display1 = NULL;
-	ALLEGRO_DISPLAY* display2 = NULL;
-	ALLEGRO_DISPLAY* display3 = NULL;
-	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
-
-	bool emGame = false;
-
-
-	bool terminou = false;
-
-	if (!al_init()) //returns a value of -1 if
-		return -1;  //Allegro does not initialize properly
-
-	display1 = al_create_display(height, width);
-
-
-	if (!display1) {
-		return -1;
-	}
-
-	al_init_primitives_addon();
-	al_install_keyboard();
-
-	event_queue = al_create_event_queue();
-
-	al_register_event_source(event_queue, al_get_keyboard_event_source());
-	while (!terminou) {
-		if (emGame == true) {
-			emGame = false;
-		}
-		while (!emGame) {
-			ALLEGRO_EVENT ev;
-			al_wait_for_event(event_queue, &ev);
-
-			if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-				if (ev.keyboard.keycode == ALLEGRO_KEY_1 && emGame == false) {
-					emGame = true;
-					display2 = al_create_display(width, height);
-					tenis(display2);
-				}
-				if (ev.keyboard.keycode == ALLEGRO_KEY_2 && emGame == false) {
-					emGame = true;
-					display3 = al_create_display(width, height);
-					teste(display3);
-				}
-				if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE & emGame == false) {
-					terminou = true;
-				}
-			}
-			emGame = false;
-			al_flip_display();
-		}
-	}
-
-	al_destroy_display(display1);
-	return 0;
-}
-
 int tenis(ALLEGRO_DISPLAY* display) {
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* ballTimer = NULL;
@@ -88,13 +26,6 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	Player player;
 	Player bot;
 	Ball ball;
-
-
-	//Inicializando ADDONS e instalações
-	al_init_primitives_addon();
-	al_install_keyboard();
-	al_init_font_addon();
-	al_init_ttf_addon();
 
 	//Inicializando posição do bot e do jogador
 	initBot(bot);
@@ -135,7 +66,6 @@ int tenis(ALLEGRO_DISPLAY* display) {
 
 		//Evento de timer
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
-
 			//Movimentação do bot
 			if (ev.timer.source == botTimer) {
 				if (toLeft) {
@@ -206,33 +136,10 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_destroy_timer(ballTimer);
 	al_destroy_font(fontPlacarPontos);
 	al_destroy_font(fontPlacarSets);
-	
+
 	aceleracao = 1;
 	ballYDirection = 1;
 	ballXDirection = 1;
 
 	return 0;
 }
-
-int teste(ALLEGRO_DISPLAY* display) {
-	// Variável representando a janela principal
-	// Inicializamos a biblioteca
-	al_init();
-
-	// Criamos a nossa janela - dimensões de 640x480 px
-
-	// Preenchemos a janela de branco
-	al_clear_to_color(al_map_rgb(255, 255, 255));
-
-	// Atualiza a tela
-	al_flip_display();
-
-	// Segura a execução por 10 segundos
-	al_rest(1.0);
-
-
-	al_destroy_display(display);
-	// Finaliza a janela
-	return 0;
-}
-

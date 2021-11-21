@@ -1,3 +1,4 @@
 #pragma once
-const int height = 800;
-const int width = 800;
+extern int height;
+extern int width;
+extern int numeroObstaculos;
