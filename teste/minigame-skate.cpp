@@ -1,5 +1,7 @@
 #include <allegro5\allegro.h>
 #include <allegro5\allegro_primitives.h>
+#include <allegro5\allegro_acodec.h>
+#include <allegro5\allegro_audio.h>
 #include <allegro5\allegro_image.h>
 #include <allegro5\allegro_font.h>
 #include <allegro5\allegro_ttf.h>
@@ -22,6 +24,10 @@ int velocidadePulo = velocidadeMaxPulo;
 
 int imagemJogador = 0;
 
+int skate = 0;
+
+bool aux = false;
+
 int segundos = 0;
 int minutos = 0;
 
@@ -41,6 +47,9 @@ bool keys[4] = {
 
 void DrawBackgorund();
 void DrawText(Jogador& jogador);
+
+void PlaySound(ALLEGRO_SAMPLE* sample);
+void PlaySoundBaixo(ALLEGRO_SAMPLE* sample);
 
 void InitJogador(Jogador& jogador);
 void DrawJogador(Jogador& jogador);
@@ -71,6 +80,10 @@ int main(void) {
 	ALLEGRO_TIMER* updateObstaculoTimer = NULL;
 	ALLEGRO_TIMER* relogioJogo = NULL;
 
+	ALLEGRO_SAMPLE* somSkate = NULL;
+	ALLEGRO_SAMPLE* musica = NULL;
+	ALLEGRO_SAMPLE* somPulo = NULL;
+
 	if (!al_init())
 		return -1;
 
@@ -79,11 +92,13 @@ int main(void) {
 	if (!display)
 		return -1;
 
+	al_install_audio();
 	al_init_ttf_addon();
 	al_init_font_addon();
-	al_init_image_addon();
-	al_init_primitives_addon();
 	al_install_keyboard();
+	al_init_image_addon();
+	al_init_acodec_addon();
+	al_init_primitives_addon();
 
 	event_queue = al_create_event_queue();
 	gameTimer = al_create_timer(1.0 / FPS);
@@ -91,6 +106,11 @@ int main(void) {
 	updateObstaculoTimer = al_create_timer(0.035);
 	relogioJogo = al_create_timer(1.0);
 
+	somSkate = al_load_sample("skate.wav");
+	somPulo = al_load_sample("pulo.wav");
+	musica = al_load_sample("cbj.wav");
+
+	al_reserve_samples(3);
 
 	srand(time(NULL));
 
@@ -112,6 +132,12 @@ int main(void) {
 	while (!done) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
+		
+		if (aux == false)
+		{
+			aux = true;
+			PlaySound(musica);
+		}
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
 			redraw = true;
@@ -119,6 +145,7 @@ int main(void) {
 			if (keys[UP]) {
 				if (!pulo) {
 					pulo = true;
+					PlaySoundBaixo(somPulo);
 				}
 			}
 
@@ -161,6 +188,7 @@ int main(void) {
 			UpdateObstaculo(obstaculos, numeroObstaculos);
 			
 			if (Collision(obstaculos, jogador)) {
+				al_stop_samples();
 				al_flush_event_queue(event_queue);
 				al_clear_to_color(al_map_rgb(186, 0, 0));
 				DrawText(jogador);
@@ -170,6 +198,12 @@ int main(void) {
 			}
 			
 		} if (ev.timer.source == relogioJogo) {
+
+			if (skate == 0) {
+				PlaySoundBaixo(somSkate);
+			}
+
+			skate++;
 
 			segundos++;
 
@@ -185,8 +219,14 @@ int main(void) {
 				al_clear_to_color(al_map_rgb(119, 198, 110));
 				DrawText(jogador);
 				al_flip_display();
-				al_rest(5);
+				al_rest(5.5);
 				done = true;
+			}
+
+			if (skate == 3) {
+				
+				PlaySoundBaixo(somSkate);
+				skate = 1;
 			}
 
 
@@ -266,6 +306,9 @@ int main(void) {
 			redraw = false;
 
 			al_draw_filled_rectangle(0, 160, 640, 480, al_map_rgb(0, 255, 0));
+			al_draw_line(280, 160, 106.5, 480, al_map_rgb(255, 0, 0), 2);
+			al_draw_line(390, 160, 547.5, 480, al_map_rgb(255, 0, 0), 2);
+
 			DrawBackgorund();
 
 			DrawText(jogador);
@@ -279,6 +322,10 @@ int main(void) {
 		}
 
 	}
+
+	al_destroy_sample(somPulo);
+	al_destroy_sample(somSkate);
+	al_destroy_sample(musica);
 
 	al_destroy_timer(gameTimer);
 	al_destroy_timer(obstaculoTimer);
@@ -298,13 +345,14 @@ void DrawBackgorund() {
 	al_destroy_bitmap(ceu);
 
 	ALLEGRO_BITMAP* chao;
-
-
+	chao = al_load_bitmap("rua.png");
+	al_draw_bitmap(chao, 0, 160, 0);
+	al_destroy_bitmap(chao);
 }
 
 void DrawText(Jogador& jogador) {
 
-	ALLEGRO_FONT* font = al_load_font("fonte.ttf", 30, 0);
+	ALLEGRO_FONT* font = al_load_font("fonte.ttf", 35, 0);
 
 	if (jogador.status == VIVO)
 	{
@@ -320,22 +368,31 @@ void DrawText(Jogador& jogador) {
 			al_draw_text(font, al_map_rgb(255, 211, 0), width / 2, (height / 3 + height / 3) - 65, ALLEGRO_ALIGN_CENTER, "provou ser o proprio choris!");
 		} else {
 			al_draw_text(font, al_map_rgb(255, 211, 0), width / 2, height / 3, ALLEGRO_ALIGN_CENTER, "VOCE PERDEU!");
-			al_draw_text(font, al_map_rgb(255, 211, 0), width / 2, height / 3 + height / 3, ALLEGRO_ALIGN_CENTER, "Tente Novamente!");
+			al_draw_text(font, al_map_rgb(255, 211, 0), width / 2, (height / 3 + height / 3) - 105, ALLEGRO_ALIGN_CENTER, "Tente Novamente!");
 		}
 	}
 
 	al_destroy_font(font);
 }
 
+void PlaySound(ALLEGRO_SAMPLE* sample) {
+	al_play_sample(sample, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+}
+
+void PlaySoundBaixo(ALLEGRO_SAMPLE* sample) {
+	al_play_sample(sample, 0.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+}
+
+
 void InitJogador(Jogador& jogador) {
 	jogador.ID = JOGADOR;
 
 	jogador.posicao = MEIO;
 
-	jogador.x1 = 295; //25
-	jogador.x2 = 345; //25
-	jogador.y1 = 450; //parte inferior da tela "chão"
-	jogador.y2 = 375; //chão + 75
+	jogador.x1 = 295; 
+	jogador.x2 = 345; 
+	jogador.y1 = 450; 
+	jogador.y2 = 375; 
 
 	jogador.status = VIVO;
 }
@@ -556,7 +613,6 @@ void DrawPassedObstaculo(Obstaculo obstaculo[], int size) {
 
 int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 	for (int i = 0; i < numeroObstaculos; i++) {
-		//não deve ser pulado
 		if (obstaculo[i].status == VIVO && obstaculo[i].tipo == CONE) {
 			if (obstaculo[i].x1 < jogador.x1 + 50 &&
 				obstaculo[i].x1 + 50 > jogador.x1 &&
@@ -567,8 +623,6 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 				return 1;
 			}
 		}
-		//TODO: 
-		//deve ser pulado
 		else if (obstaculo[i].status == VIVO && obstaculo[i].tipo == CORRIMAO) {
 			if (obstaculo[i].x1 < jogador.x1 + 50 &&
 				obstaculo[i].x1 + 50 > jogador.x1 &&
