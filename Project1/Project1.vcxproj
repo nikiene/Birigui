@@ -172,7 +172,7 @@
     <ClCompile Include="placar.cpp" />
     <ClCompile Include="skate.cpp" />
     <ClCompile Include="surf.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Project1.cpp" />
     <ClCompile Include="tenis.cpp" />
   </ItemGroup>
   <ItemGroup>
