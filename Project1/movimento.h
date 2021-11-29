@@ -14,6 +14,8 @@ extern int velocidadeMaxPulo;
 extern int gravidade;
 extern int velocidadePulo;
 
+extern bool keysHub[6];
+
 
 void movementLeft(Player& p);
 

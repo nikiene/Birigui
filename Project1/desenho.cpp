@@ -16,8 +16,8 @@ void drawBall(Ball& b) {
 }
 
 void drawPlacar(ALLEGRO_FONT* fontPlacarPontos, ALLEGRO_FONT* fontPlacarSets) {
-	al_draw_textf(fontPlacarPontos, al_map_rgb(255, 255, 255), width / 2, height / 8, ALLEGRO_ALIGN_CENTER, "Player %d - %d Bot", pontosPlayer, pontosBot);
-	al_draw_textf(fontPlacarSets, al_map_rgb(255, 255, 255), width / 2, (height / 8) + 20, ALLEGRO_ALIGN_CENTER, "%d x %d ", setsPlayer, setsBot);
+	al_draw_textf(fontPlacarPontos, al_map_rgb(255, 255, 255), widthTenis / 2, heightTenis / 8, ALLEGRO_ALIGN_CENTER, "Player %d - %d Bot", pontosPlayer, pontosBot);
+	al_draw_textf(fontPlacarSets, al_map_rgb(255, 255, 255), widthTenis / 2, (heightTenis / 8) + 20, ALLEGRO_ALIGN_CENTER, "%d x %d ", setsPlayer, setsBot);
 }
 
 void DrawJogador(Jogador& jogador) {
