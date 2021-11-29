@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 
 	int map[] = {
 				  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-				  1,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1,
+				  1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,4,3,3,3,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
@@ -40,7 +40,7 @@ int main(int argc, char** argv)
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,5,0,1,
 				  1,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,1,
-				  1,2,3,3,3,3,3,3,3,6,3,3,3,3,3,3,3,3,2,1,
+				  1,0,3,3,3,3,3,3,3,6,3,3,3,3,3,3,3,3,0,1,
 				  1,0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,1,
 				  1,0,8,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,7,0,0,0,0,0,0,0,1,
 				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
-				  1,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,1,
+				  1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 				  1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 };
 
 	//PROJECT VARIABLES
@@ -456,16 +456,23 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "Foi inventado por alguns surfistas, como uma brincadeira para um dia no qual nao havia ondas no mar. ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "Eles utilizaram rodinhas de patins. Ja em 1965 foram fabricados os primeiros skates e realizados os");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "primeiros campeonatos.");
-						displaySkate = al_create_display(width, height);
-						skate(displaySkate);
-						inGame = true;
+						
 					}
 
 					else if (contador == 2 && npc_fala == 2)
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois
+					{
+						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora como jogar, para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita  ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "e a tecla 'W', seta pra cima ou espaco para pulas e se quiser sair do minigame so pressionar a tecla 'esc'.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode pular por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
+					}
 					else if (contador == 3 && npc_fala == 2)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 420, ALLEGRO_ALIGN_CENTRE, "npc 2 falas 3");
+						displaySkate = al_create_display(width, height);
+						skate(displaySkate);
+						inGame = true;
+						contador = 0;
 
 					}
 					else if (contador == 4 && npc_fala == 2)
