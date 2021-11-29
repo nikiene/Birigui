@@ -69,10 +69,10 @@ struct Obstaculo {
 };
 
 enum KEYS {
-	UP,
 	DOWN,
 	LEFT,
 	RIGHT,
+	UP,
 	SPACE,
 	Z
 };
