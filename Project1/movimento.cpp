@@ -35,11 +35,15 @@ int velocidadePulo = velocidadeMaxPulo;
 void movementLeft(Player& p) {
 	p.x1 -= 50;
 	p.x2 -= 50;
+	p.hitboxX1 -= 50;
+	p.hitboxX2 -= 50;
 }
 
 void movementRight(Player& p) {
 	p.x1 += 50;
 	p.x2 += 50;
+	p.hitboxX1 += 50;
+	p.hitboxX2 += 50;
 }
 
 void moveBall(Ball& b) {
@@ -50,30 +54,43 @@ void moveBall(Ball& b) {
 
 }
 
-bool colide(Ball& ball, Player& player, Player& bot) {
+bool colide(Ball& ball, Player& player, Player& bot, bool passouPlayer, bool passouBot) {
+	int botDiff = bot.x2 - bot.x1;
+	int playerDiff = player.x2 - player.x1;
+
 	//Colisão com o jogador
-	if ((ball.x >= player.x1 && ball.x <= player.x2) && (ball.y >= player.y1 && ball.y <= player.y2)) {
-		//if (ball.x - player.x1 > player.x2 - ball.x)
-			//ballXDirection *= -1;
+	if ((ball.x >= player.hitboxX1 && ball.x <= player.hitboxX2) && (ball.y >= player.hitBoxY1 + 15 && ball.y <= player.hitBoxY2 && passouPlayer)) {
+		if (ball.x - player.hitboxX1 > player.hitboxX2 - ball.x) {
+			ballXDirection = 0.8;
+		}
+		else if (ball.x - player.hitboxX1 < player.hitboxX2 - ball.x)
+			ballXDirection = -0.8;
+		else
+			ballXDirection = 0;
 		ballYDirection *= -1;
 		return true;
 
 	}
 	//Colisão com o bot
-	if ((ball.x >= bot.x1 && ball.x <= bot.x2) && (ball.y >= bot.y1 && ball.y <= bot.y2)) {
-		//if (ball.x - player.x1 > player.x2 - ball.x)
-			//ballXDirection *= -1;
+	if ((ball.x >= bot.hitboxX1 && ball.x <= bot.hitboxX2) && (ball.y >= bot.hitBoxY1 && ball.y <= bot.hitBoxY2) && passouBot) {
+		if (ball.x - bot.hitboxX1 > bot.hitboxX2 - ball.x) {
+			ballXDirection = -0.8;
+		}
+		else if (ball.x - bot.hitboxX1 < bot.hitboxX2 - ball.x)
+			ballXDirection = 0.8;
+		else
+			ballXDirection = 0;
 		ballYDirection *= -1;
 		return true;
 
 	}
 	//Colisão com os cantos
-	if (ball.x >= widthTenis || ball.x <= 0) {
+	if (ball.x >= (7 * width) / 8 - 30 || ball.x <= (width / 8) + 30) {
 		ballXDirection *= -1;
 		return true;
 	}
 
-	if (ball.y <= 0 || ball.y >= heightTenis) {
+	if (ball.y <= 0 || ball.y >= height) {
 		if (ball.y <= 0) {
 			if (++pontosPlayer == 5) {
 				zeraPontuacao();
@@ -86,12 +103,27 @@ bool colide(Ball& ball, Player& player, Player& bot) {
 				setsBot++;
 			}
 		}
+		aceleracao = 1.0;
 		ballYDirection *= -1;
-		ball.x = widthTenis / 2;
-		ball.y = heightTenis / 2;
+		ball.x = width / 2;
+		ball.y = height / 2;
 		return true;
 	}
 
+	return false;
+}
+
+bool passouDoPlayer(Ball& ball, Player& player, Player& bot) {
+	if (ball.y < player.y1) {
+		return true;
+	}
+	return false;
+}
+
+bool passouDoBot(Ball& ball, Player& player, Player& bot) {
+	if (ball.y < bot.y1) {
+		return true;
+	}
 	return false;
 }
 

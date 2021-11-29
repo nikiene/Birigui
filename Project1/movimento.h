@@ -23,7 +23,11 @@ void movementRight(Player& p);
 
 void moveBall(Ball& b);
 
-bool colide(Ball& ball, Player& player, Player& bot);
+bool colide(Ball& ball, Player& player, Player& bot, bool passouPlayer, bool passouBot);
+
+bool passouDoBot(Ball& ball, Player& player, Player& bot);
+
+bool passouDoPlayer(Ball& ball, Player& player, Player& bot);
 
 void MoveJogadorLeft(Jogador& jogador);
 

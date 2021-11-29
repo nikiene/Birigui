@@ -15,38 +15,50 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	ALLEGRO_TIMER* ballTimer = NULL;
 	ALLEGRO_TIMER* botTimer = NULL;
 	ALLEGRO_TIMER* colideTimer = NULL;
-	ALLEGRO_FONT* fontPlacarSets = NULL;
-	ALLEGRO_FONT* fontPlacarPontos = NULL;
+	ALLEGRO_FONT* fontHeader = NULL;
+	ALLEGRO_FONT* fontBody = NULL;
+	ALLEGRO_BITMAP* bgSheet = NULL;
+	ALLEGRO_BITMAP* ballSheet = NULL;
 
 	bool done = false;
 	bool redraw = false;
 	bool toRight = false;
 	bool toLeft = true;
+	bool mudouVelocidade1 = false;
+	bool mudouVelocidade2 = false;
+	bool passouPlayer = false;
+	bool passouBot = false;
 
 	Player player;
 	Player bot;
 	Ball ball;
 
+	int xoff = 0;
+	int yoff = 0;
+
+	int mapColums = 20;
+	int mapSize = 400;
+	int titleSize = 80;
+
 	//Inicializando posição do bot e do jogador
 	initBot(bot);
 	initPlayer(player);
 	initBall(ball);
-	printf("Player - x1: %d x2: %d, y1: %d, y2: %d\n", player.x1, player.x2, player.y1, player.y2);
-	printf("Bot - x1: %d x2: %d, y1: %d, y2: %d", bot.x1, bot.x2, bot.y1, bot.y2);
 
 	//Inicialização de variáveis do allegro
 	event_queue = al_create_event_queue();
 	ballTimer = al_create_timer(0.05);
-	botTimer = al_create_timer(0.2);
+	botTimer = al_create_timer(0.15);
 	colideTimer = al_create_timer(1.0 / 60.0);
-	fontPlacarPontos = al_load_font("fontePlacar.ttf", 20, NULL);
-	fontPlacarSets = al_load_font("fontePlacar.ttf", 25, NULL);
+	fontBody = al_load_font("fontePlacar.ttf", 18, NULL);
+	fontHeader = al_load_font("fontePlacar.ttf", 25, NULL);
+	bgSheet = al_load_bitmap("bgTenis.png");
 
 	//Desenhando player e bot
 	drawPlayer(player);
 	drawPlayer(bot);
 	drawBall(ball);
-	drawPlacar(fontPlacarPontos, fontPlacarSets);
+	drawPlacar(fontBody, fontHeader);
 	al_flip_display();
 
 	//Registrando as origens de evento
@@ -70,7 +82,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			if (ev.timer.source == botTimer) {
 				if (toLeft) {
 					movementLeft(bot);
-					if (bot.x1 <= 0) {
+					if (bot.x1 <= (width / 8) || ball.x > bot.x2) {
 						toLeft = false;
 						toRight = true;
 					}
@@ -78,7 +90,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 				else {
 					if (toRight) {
 						movementRight(bot);
-						if (bot.x2 >= widthTenis) {
+						if (bot.x2 >= (7 * width) / 8 || ball.x < bot.x1) {
 							toLeft = true;
 							toRight = false;
 						}
@@ -91,7 +103,13 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			}
 
 			if (ev.timer.source == colideTimer) {
-				colide(ball, player, bot);
+				if (passouDoBot(ball, player, bot))
+					passouBot = passouDoBot(ball, player, bot);
+
+				if (passouDoPlayer(ball, player, bot))
+					passouPlayer = passouDoPlayer(ball, player, bot);
+
+				colide(ball, player, bot, passouPlayer, passouBot);
 			}
 
 		}
@@ -102,20 +120,36 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_A) {
-				if (player.x1 > 0) {
+				if (player.x1 > (width / 8)) {
 					movementLeft(player);
-					printf("\nplayer x1: %d", player.x1);
+					printf("\nplayer x1: %d - x2 %d - hitBoxX1 - %d - hitBoxX2 - %d", player.x1, player.x2, player.hitboxX1, player.hitboxX2);
 				}
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
-				if (player.x2 < widthTenis) {
+				if (player.x2 < (7 * width) / 8) {
 					movementRight(player);
-					printf("\nplayer x1: %d", player.x1);
+					printf("\nplayer x1: %d - x2 %d - hitBoxX1 - %d - hitBoxX2 - %d", player.x1, player.x2, player.hitboxX1, player.hitboxX2);
 				}
 			}
 		}
-		drawPlacar(fontPlacarPontos, fontPlacarSets);
+		if (setsPlayer == 1) {
+			mudouVelocidade1 = true;
+			if (mudouVelocidade1) {
+				al_set_timer_speed(botTimer, 0.1);
+				mudouVelocidade1 = false;
+			}
+		}
+		else if (setsPlayer == 2) {
+			mudouVelocidade2 = true;
+			mudouVelocidade1 = false;
+			if (mudouVelocidade2) {
+				al_set_timer_speed(botTimer, 0.05);
+				mudouVelocidade2 = false;
+			}
+		}
+		al_draw_bitmap(bgSheet, 0, 0, 0);
+		drawPlacar(fontHeader, fontBody);
 		drawPlayer(player);
 		drawPlayer(bot);
 		drawBall(ball);
@@ -134,8 +168,11 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_destroy_timer(colideTimer);
 	al_destroy_timer(botTimer);
 	al_destroy_timer(ballTimer);
-	al_destroy_font(fontPlacarPontos);
-	al_destroy_font(fontPlacarSets);
+	al_destroy_font(fontHeader);
+	al_destroy_font(fontBody);
+	al_destroy_bitmap(player.sprite);
+	al_destroy_bitmap(bot.sprite);
+	al_destroy_bitmap(bgSheet);
 
 	aceleracao = 1;
 	ballYDirection = 1;

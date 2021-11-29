@@ -8,24 +8,38 @@
 int PL = 5, BL = 5;
 
 void initBot(Player& b) {
-	b.x1 = (widthTenis / 2) - 50;
-	b.y1 = heightTenis / 4;
-	b.x2 = (widthTenis / 2) + 50;
+	b.x1 = (width / 2) - 50;
+	b.y1 = height / 8;
+	b.x2 = (width / 2) + 50;
 	b.y2 = b.y1 + 25;
+
+	b.hitboxX1 = (b.x2 - b.x1) / 4 + b.x1;
+	b.hitboxX2 = b.x2;
+	b.hitBoxY1 = b.y1;
+	b.hitBoxY2 = b.y2;
+	b.sprite = al_load_bitmap("botSprite.png");
 }
 
 void initPlayer(Player& p) {
-	p.x1 = (widthTenis / 2) - 50;
-	p.y1 = (3 * heightTenis) / 4;
-	p.x2 = (widthTenis / 2) + 50;
+	p.id = JOGADOR;
+	p.x1 = (width / 2) - 50;
+	p.y1 = (3 * height) / 4;
+	p.x2 = (width / 2) + 50;
 	p.y2 = p.y1 + 25;
+
+	p.hitboxX1 = (p.x2 - p.x1) / 4 + p.x1;
+	p.hitboxX2 = p.x2;
+	p.hitBoxY1 = p.y1;
+	p.hitBoxY2 = p.y2;
+	p.sprite = al_load_bitmap("playerSprite.png");
 }
 
 void initBall(Ball& b) {
-	b.x = widthTenis / 2;
-	b.y = heightTenis / 2;
-	b.raio = 10.0;
+	b.x = width / 2;
+	b.y = height / 2;
+	b.raio = 5.5;
 }
+
 
 void InitObstaculo(Obstaculo obstaculo[], int size) {
 	for (int i = 0; i < size; i++) {
