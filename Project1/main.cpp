@@ -447,7 +447,6 @@ int main(int argc, char** argv)
 						inGame = true;
 						displayTenis = al_create_display(widthTenis, heightTenis);
 						tenis(displayTenis);
-						printf("Passei aqui dps do jogo\n");
 						al_set_target_backbuffer(display);
 						contador = 0;
 						

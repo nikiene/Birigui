@@ -5,8 +5,9 @@
  int heightSurf = 768;
  int widthSurf = 1024;
 
- int heightTenis = 600;
  int widthTenis = 800;
+ int heightTenis = 800;
+
 
  int heightSkate = 480;
  int widthSkate = 680;

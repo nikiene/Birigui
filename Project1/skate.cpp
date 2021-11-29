@@ -12,7 +12,6 @@
 #include "placar.h"
 #include "movimento.h"
 
-/*
 
 int skate(ALLEGRO_DISPLAY* display) {
 	bool done = false;
@@ -195,4 +194,3 @@ int skate(ALLEGRO_DISPLAY* display) {
 
 	return 0;
 }
-*/
