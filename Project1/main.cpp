@@ -532,9 +532,7 @@ int main(int argc, char** argv)
 					else if (contador == 4 && npc_fala == 4)
 					{
 						contador = 0;
-						displayBoxe = al_create_display(width, height);
-						boxe(displayBoxe);
-						inGame = true;
+						
 					}
 					//fala npc comeco // baixo>>>boxe
 					if (contador == 1 && npc_fala == 5)
@@ -546,20 +544,27 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "de três minutos e o uso de luvas, so entraram em vigor em 1872.");
 					}
 					else if (contador == 2 && npc_fala == 5)
+					{
 						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-					al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, quando comecar a partida voce vai ver 3 botoes na");
-					al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "parte de baixo da tela, onde voce pode atacar, defender e contra-atacar");//continuar com a fala depois
-					al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e muito brutais e ele so foi reformado em 1867 com as Regras de Quensberry, que previam rounds ");
-					al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "de três minutos e o uso de luvas, so entraram em vigor em 1872.");
-				}
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, o jogo é baseado em prever a habilidade do inimigo, voce");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "tem 3 opcoes de habilidade, sendo elas 'jeb', 'chute' e 'combo' cada um tem uma certa vantagem ");//continuar com a fala depois
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "sobre a outra, para nocautear o inimigo, tera que acertar 5 golpes nele.");
+
+					}
 					else if (contador == 3 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 420, ALLEGRO_ALIGN_CENTRE, "npc 5 falas 3");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "a ordem de vantagens é:");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "JEB > CHUTE > COMBO > JEB ");
 
 					}
 					else if (contador == 4 && npc_fala == 5)
+					{
+						displayBoxe = al_create_display(width, height);
+						boxe(displayBoxe);
+						inGame = true;
 						contador = 0;
-
+					}
 				}
 
 				if (collision)//quando acontecer o colisao o player volta para o lado oposto que veio
