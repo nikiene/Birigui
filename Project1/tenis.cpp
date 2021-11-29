@@ -78,7 +78,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 				else {
 					if (toRight) {
 						movementRight(bot);
-						if (bot.x2 >= width) {
+						if (bot.x2 >= widthTenis) {
 							toLeft = true;
 							toRight = false;
 						}
@@ -109,7 +109,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
-				if (player.x2 < width) {
+				if (player.x2 < widthTenis) {
 					movementRight(player);
 					printf("\nplayer x1: %d", player.x1);
 				}

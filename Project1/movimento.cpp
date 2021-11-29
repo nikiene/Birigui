@@ -68,12 +68,12 @@ bool colide(Ball& ball, Player& player, Player& bot) {
 
 	}
 	//Colisão com os cantos
-	if (ball.x >= width || ball.x <= 0) {
+	if (ball.x >= widthTenis || ball.x <= 0) {
 		ballXDirection *= -1;
 		return true;
 	}
 
-	if (ball.y <= 0 || ball.y >= height) {
+	if (ball.y <= 0 || ball.y >= heightTenis) {
 		if (ball.y <= 0) {
 			if (++pontosPlayer == 5) {
 				zeraPontuacao();
@@ -87,8 +87,8 @@ bool colide(Ball& ball, Player& player, Player& bot) {
 			}
 		}
 		ballYDirection *= -1;
-		ball.x = width / 2;
-		ball.y = height / 2;
+		ball.x = widthTenis / 2;
+		ball.y = heightTenis / 2;
 		return true;
 	}
 
