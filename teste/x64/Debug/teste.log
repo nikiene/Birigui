@@ -1,0 +1,5 @@
+﻿  minigame-skate.cpp
+minigame-skate.obj : error LNK2019: símbolo externo não resolvido, __imp_al_init_primitives_addon, referenciado na função main
+minigame-skate.obj : error LNK2019: símbolo externo não resolvido, __imp_al_draw_filled_rectangle, referenciado na função "void __cdecl DrawJogador(struct Jogador &)" (?DrawJogador@@YAXAEAUJogador@@@Z)
+minigame-skate.obj : error LNK2019: símbolo externo não resolvido, __imp_al_load_font, referenciado na função main
+C:\Users\Sarah\Desktop\teste\x64\Debug\teste.exe : fatal error LNK1120: 3 externo não resolvidos
