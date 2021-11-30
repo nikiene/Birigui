@@ -1,0 +1,3 @@
+﻿  Boxe.cpp
+C:\Users\branc\source\repos\ProjectBirigui\ProjectBirigui\Boxe.cpp(77): warning C4715: 'endgame': nem todos os caminhos de controle retornam um valor
+  ProjectBirigui.vcxproj -> C:\Users\branc\source\repos\ProjectBirigui\Debug\ProjectBirigui.exe
