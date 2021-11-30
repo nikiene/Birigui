@@ -248,6 +248,9 @@ int surf(ALLEGRO_DISPLAY* display)
 		al_rest(2.0);
 	}
 
+	for (int i = 0; i <= 6; i++)
+		keys[i] = false;
+
 	// --------------------- DESTRUI��O DOS EVENTOS USADOS
 	al_destroy_sample_instance(insTrilhaSonora);
 	al_destroy_sample_instance(insMedalhas);

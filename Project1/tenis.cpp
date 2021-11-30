@@ -73,7 +73,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_start_timer(botTimer);
 
 
-	while (setsBot < 3 && setsPlayer < 3 && !done) {
+	while (setsBot < 2 && setsPlayer < 2 && !done) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
 
@@ -157,14 +157,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 				}
 			}
 		}
-		if (setsPlayer == 1) {
-			mudouVelocidade1 = true;
-			if (mudouVelocidade1) {
-				al_set_timer_speed(botTimer, 0.1);
-				mudouVelocidade1 = false;
-			}
-		}
-		else if (setsPlayer == 2) {
+		else if (setsPlayer == 1) {
 			mudouVelocidade2 = true;
 			mudouVelocidade1 = false;
 			if (mudouVelocidade2) {
@@ -182,7 +175,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	}
 
 
-	if (setsPlayer == 3) {
+	if (setsPlayer == 2) {
 		al_clear_to_color(al_map_rgb(0, 255, 0));
 		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthTenis / 2, heightTenis / 2, ALLEGRO_ALIGN_CENTER, "Voce ganhou!");
 		pontoTenis++;
@@ -196,7 +189,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_rest(3);
 	//Zerando 
 	zeraPlacar();
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i <= 6; i++)
 		keys[i] = false;
 
 

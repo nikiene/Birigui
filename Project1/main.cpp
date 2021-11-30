@@ -542,6 +542,8 @@ int main(int argc, char** argv)
 						inGame = true;
 						contador = 0;
 						displaySkate = al_create_display(widthSkate, heightSkate);
+						for (int i = 0; i <= 6; i++)
+							keys[i] = false;
 						skate(displaySkate);
 						al_flush_event_queue(event_queue);
 						al_set_target_backbuffer(display);
@@ -613,6 +615,10 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 4 && npc_fala == 4)
 					{
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Para vencer o jogo e so vencer os 4 mini-jogos! ");
+					}
+					else if (contador == 5 && npc_fala == 4) {
 						contador = 0;
 					}
 					//fala npc comeco // baixo>>>boxe
@@ -702,7 +708,8 @@ int main(int argc, char** argv)
 	//DESTROY ALLEGRO OBJECTS
 	if (pontoBoxe + pontoSkate + pontoSurf + pontoTenis == 4) {
 		al_clear_to_color(al_map_rgb(0, 255, 0));
-		al_draw_text(font50, al_map_rgb(255, 255, 255), width / 2, height / 2, ALLEGRO_ALIGN_CENTER, "Voce venceu!");
+		al_draw_text(font50, al_map_rgb(255, 255, 255), width / 2, height / 2, ALLEGRO_ALIGN_CENTER, "Parabéns!");
+		al_draw_text(font50, al_map_rgb(255, 255, 255), width / 2, height / 2 + 20, ALLEGRO_ALIGN_CENTER, "Você venceu os 4 jogos, tornou-se digno de receber uma medalha!");
 		al_flip_display();
 		al_rest(5.0);
 	}
