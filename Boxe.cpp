@@ -375,6 +375,7 @@ int main(void)
             al_set_target_bitmap(al_get_backbuffer(janela));
             al_draw_bitmap(bot, 340, 122, 0);
 
+
         }
 
         //vida player
@@ -405,7 +406,9 @@ int main(void)
            
             final = al_load_bitmap("botwin.png");
             al_draw_bitmap(final, 0, 0, 0);
-            al_rest(0.5);
+            al_flip_display();
+            al_rest(3.0);
+            return -2;
         }
 
         //vida bot
@@ -439,7 +442,9 @@ int main(void)
         
             final = al_load_bitmap("playerwin.jpg");
             al_draw_bitmap(final, 0, 0, 0);
-            al_rest(0.5);
+            al_flip_display();
+            al_rest(3.0);
+            return -2;
           
 
         }
