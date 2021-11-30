@@ -487,7 +487,7 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora como jogar, para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita  ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "e a tecla 'W', seta pra cima ou espaco para pulas e se quiser sair do minigame so pressionar a tecla 'esc'.");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode pular por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode ser pulado por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
 					}
 
 					else if (contador == 3 && npc_fala == 2) {
