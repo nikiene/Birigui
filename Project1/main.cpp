@@ -476,17 +476,10 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode pular por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
 					}
-					else if (contador == 3 && npc_fala == 2)
-					{
-						displaySkate = al_create_display(width, height);
-						skate(displaySkate);
-						inGame = true;
-						contador = 0;
 
-					}
-					else if (contador == 4 && npc_fala == 2) {
-						displaySkate = al_create_display(widthSkate, heightSkate);
+					else if (contador == 3 && npc_fala == 2) {
 						inGame = true;
+						displaySkate = al_create_display(widthSkate, heightSkate);
 						skate(displaySkate);
 						al_set_target_backbuffer(display);
 						contador = 0;

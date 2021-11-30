@@ -61,6 +61,8 @@ struct Jogador {
 	int x2;
 	int y1;
 	int y2;
+
+	ALLEGRO_BITMAP* sprite;
 };
 
 struct Obstaculo {
@@ -72,15 +74,17 @@ struct Obstaculo {
 
 	int posicao;
 
-	double x1;
-	double x2;
-	double y1;
-	double y2;
+	float x1;
+	float x2;
+	float y1;
+	float y2;
 
-	double edgeRate;
-	double edgeRate2;
+	float edgeRate;
+	float edgeRate2;
 
-	double velocidade;
+	float velocidade;
+
+	ALLEGRO_BITMAP* sprite;
 };
 
 enum KEYS {
@@ -134,4 +138,34 @@ struct Sprite
 	int h;
 
 	ALLEGRO_BITMAP* image;
+};
+
+struct Plantas {
+	bool status;
+
+	int ladoPista;
+
+	int tipo;
+	int tipoArvore;
+
+	float x;
+	float y;
+
+	float edgeRate;
+	float edgeRate2;
+
+	float velocidade;
+
+	ALLEGRO_BITMAP* sprite;
+};
+
+struct Parallax {
+	float x;
+	float y;
+	float velx;
+	float vely;
+	int dirx;
+	int diry;
+
+	ALLEGRO_BITMAP* sprite;
 };

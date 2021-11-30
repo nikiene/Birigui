@@ -1,6 +1,9 @@
  int height = 800;
  int width = 800;
+
  int numeroObstaculos = 10;
+
+ int tmpSkate = 0;
 
  int heightSurf = 768;
  int widthSurf = 1024;

@@ -378,6 +378,7 @@ int boxe(ALLEGRO_DISPLAY* display)
             final = al_load_bitmap("playerwin.jpg");
             al_draw_bitmap(final, 0, 0, 0);
             al_flip_display();
+            al_rest(3.0);
             sair = true;
         }
 
@@ -426,7 +427,6 @@ int boxe(ALLEGRO_DISPLAY* display)
     al_destroy_audio_stream(musica);
     al_destroy_sample(sample);
     al_destroy_bitmap(background);
-    printf("Cheguei aqui");
 
     return 0;
 }

@@ -1,7 +1,11 @@
 #pragma once
 extern int height;
 extern int width;
+
 extern int numeroObstaculos;
+
+extern int imagemJogador;
+extern int tmpSkate;
 
 extern int heightSurf;
 extern int widthSurf;

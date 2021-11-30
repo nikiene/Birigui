@@ -4,6 +4,12 @@
 #include <time.h>
 #include <stdio.h>
 
+int segundos = 0;
+int minutos = 0;
+int imagemJogador = 0;
+int skate = 0;
+bool aux = false;
+
 void initBot(Player& b) {
 	b.x = (width / 2) - 50;
 	b.y = height / 8;
@@ -43,10 +49,9 @@ void InitObstaculo(Obstaculo obstaculo[], int size) {
 }
 
 void CreateObstaculo(Obstaculo obstaculo[], int size) {
-	srand(time(NULL));
 	for (int i = 0; i < size; i++) {
-		if (obstaculo[i].status == MORTO) {
-			obstaculo[i].tipo = rand() % 2;
+		if (i == 0 && obstaculo[i].status == MORTO) {
+			obstaculo[i].tipo = CORRIMAO;
 			obstaculo[i].posicao = rand() % 3;
 			obstaculo[i].edgeRate = 1;
 			obstaculo[i].edgeRate2 = 1;
@@ -73,11 +78,62 @@ void CreateObstaculo(Obstaculo obstaculo[], int size) {
 				obstaculo[i].status = VIVO;
 				break;
 			case 3:
+				obstaculo[i].x1 = 280 + 40;
+				obstaculo[i].y1 = 145;
+				obstaculo[i].x2 = 280 + 45;
+				obstaculo[i].y2 = 150;
+				obstaculo[i].status = VIVO;
+				break;
+			}
+			return;
+
+		}
+		else if (i > 0 && obstaculo[i].status == MORTO) {
+			obstaculo[i].tipo = rand() % 1;
+			obstaculo[i].posicao = rand() % 3;
+			obstaculo[i].edgeRate = 1;
+			obstaculo[i].edgeRate2 = 1;
+			switch (obstaculo[i].posicao) {
+			case 0:
+				obstaculo[i].x1 = 280 + 25;
+				obstaculo[i].y1 = 145;
+				obstaculo[i].x2 = 280 + 30;
+				obstaculo[i].y2 = 150;
+				obstaculo[i].status = VIVO;
+				if (obstaculo[i].tipo != obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao ||
+					obstaculo[i].tipo == obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao) {
+					obstaculo[i].status = MORTO;
+				}
+				break;
+			case 1:
+				obstaculo[i].x1 = 280 + 40;
+				obstaculo[i].y1 = 145;
+				obstaculo[i].x2 = 280 + 45;
+				obstaculo[i].y2 = 150;
+				obstaculo[i].status = VIVO;
+				if (obstaculo[i].tipo != obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao ||
+					obstaculo[i].tipo == obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao) {
+					obstaculo[i].status = MORTO;
+				}
+				break;
+			case 2:
+				obstaculo[i].x1 = 280 + 55;
+				obstaculo[i].y1 = 145;
+				obstaculo[i].x2 = 280 + 70;
+				obstaculo[i].y2 = 150;
+				obstaculo[i].status = VIVO;
+				if (obstaculo[i].tipo != obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao ||
+					obstaculo[i].tipo == obstaculo[0].tipo && obstaculo[i].posicao == obstaculo[0].posicao) {
+					obstaculo[i].status = MORTO;
+				}
+				break;
+			case 3:
 				obstaculo[i].status = MORTO;
 			}
 			return;
 		}
 	}
+
 }
 
 void UpdateObstaculo(Obstaculo obstaculo[], int size) {
@@ -85,7 +141,7 @@ void UpdateObstaculo(Obstaculo obstaculo[], int size) {
 		if (obstaculo[i].status == VIVO) {
 			obstaculo[i].y1 += obstaculo[i].velocidade;
 			obstaculo[i].y2 += obstaculo[i].velocidade + obstaculo[i].edgeRate2;
-			obstaculo[i].edgeRate2 += (double) 0.15;
+			obstaculo[i].edgeRate2 += 0.15;
 			if (obstaculo[i].posicao == 0) {
 				obstaculo[i].x1 -= obstaculo[i].edgeRate;
 				obstaculo[i].x2 -= obstaculo[i].edgeRate / 2;
@@ -125,10 +181,10 @@ void InitJogador(Jogador& jogador) {
 
 	jogador.posicao = MEIO;
 
-	jogador.x1 = 295; //25
-	jogador.x2 = 345; //25
-	jogador.y1 = 450; //parte inferior da tela "chao"
-	jogador.y2 = 375; //chao + 75
+	jogador.x1 = 295;
+	jogador.x2 = 345;
+	jogador.y1 = 450;
+	jogador.y2 = 375;
 
 	jogador.status = VIVO;
 }
@@ -142,4 +198,90 @@ int endgame(int PL, int BL) {
 		printf_s("você Perdeu! Deseja começar de novo?");
 		return 0;
 	}
+}
+
+
+void InitPlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		plantas[i].velocidade = 1.0;
+		plantas[i].status = MORTO;
+	}
+}
+
+void CreatePlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		if (plantas[i].status == MORTO) {
+			plantas[i].tipo = rand() % 2;
+			if (plantas[i].tipo == 1) {
+				plantas[i].y = 100;
+				plantas[i].tipoArvore = rand() % 2;
+				if (plantas[i].tipoArvore == 0) {
+					plantas[i].y = 80;
+
+				}
+			}
+			plantas[i].edgeRate = 1;
+			plantas[i].edgeRate2 = 1;
+			plantas[i].y = 130;
+			plantas[i].ladoPista = rand() % 2;
+			switch (plantas[i].ladoPista) {
+			case 0:
+				plantas[i].x = (rand() % 100) + 80;
+				plantas[i].status = VIVO;
+				break;
+			case 1:
+				plantas[i].x = (rand() % 100) + 450;
+				plantas[i].status = VIVO;
+				break;
+			case 2:
+				plantas[i].status = MORTO;
+				break;
+			}
+			return;
+		}
+	}
+
+
+}
+
+void UpdatePlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		if (plantas[i].status == VIVO) {
+			plantas[i].y += plantas[i].velocidade;
+			if (plantas[i].ladoPista == 0) {
+				plantas[i].x -= plantas[i].edgeRate / 2;
+				plantas[i].edgeRate += 0.1;
+			}
+			else if (plantas[i].ladoPista == 1) {
+				plantas[i].x += plantas[i].edgeRate / 2;
+				plantas[i].edgeRate += 0.1;
+			}
+
+			plantas[i].velocidade += 0.1;
+			plantas[i].edgeRate += 0.5;
+
+			if (plantas[i].y > height) {
+				plantas[i].velocidade = 2;
+				plantas[i].edgeRate = 1;
+				plantas[i].edgeRate2 = 1;
+				plantas[i].status = MORTO;
+			}
+		}
+	}
+}
+
+void InitParallax(Parallax& parallax, float x, float y, float velx, float vely, int dirX, int dirY, ALLEGRO_BITMAP* image) {
+	parallax.x = x;
+	parallax.y = y;
+	parallax.velx = velx;
+	parallax.vely = vely;
+	parallax.dirx = dirX;
+	parallax.diry = dirY;
+	parallax.sprite = image;
+}
+
+void UpdateParallax(Parallax& parallax) {
+	parallax.x += parallax.velx * parallax.dirx;
+	if (parallax.x + width <= 0)
+		parallax.x = 0;
 }

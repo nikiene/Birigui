@@ -10,7 +10,6 @@
 #include "placar.h"
 #include "movimento.h"
 #include "structs.h"
-#include "skate.cpp"
 
 //Variáveis
 double aceleracao = 1.1;
@@ -125,20 +124,6 @@ int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes) {
 
 	return 0;
 }
-bool passouDoPlayer(Ball& ball, Player& player, Player& bot) {
-	if (ball.y < player.y) {
-		return true;
-	}
-	return false;
-}
-
-bool passouDoBot(Ball& ball, Player& player, Player& bot) {
-	if (ball.y < bot.y) {
-		return true;
-	}
-	return false;
-}
-
 void MoveJogadorLeft(Jogador& jogador) {
 	if (jogador.posicao != ESQUERDA) {
 		jogador.posicao -= 1;
@@ -169,7 +154,6 @@ void MakeJogadorJump(Jogador& jogador) {
 
 int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 	for (int i = 0; i < numeroObstaculos; i++) {
-		//não deve ser pulado
 		if (obstaculo[i].status == VIVO && obstaculo[i].tipo == CONE) {
 			if (obstaculo[i].x1 < jogador.x1 + 50 &&
 				obstaculo[i].x1 + 50 > jogador.x1 &&
@@ -180,14 +164,12 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 				return 1;
 			}
 		}
-		//TODO: 
-		//deve ser pulado
 		else if (obstaculo[i].status == VIVO && obstaculo[i].tipo == CORRIMAO) {
 			if (obstaculo[i].x1 < jogador.x1 + 50 &&
 				obstaculo[i].x1 + 50 > jogador.x1 &&
 				obstaculo[i].y1 < jogador.y2 + 75 &&
 				obstaculo[i].y1 + 25 > jogador.y2 &&
-				(obstaculo[i].y2 > 425 && obstaculo[i].y1 < 450)) {
+				(obstaculo[i].y2 > 448 && obstaculo[i].y1 < 450)) {
 				jogador.status = MORTO;
 				return 1;
 			}
@@ -195,6 +177,7 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 	}
 	return 0;
 }
+
 
 const char* combat(int acaoP, int acaoB) {
 	if (acaoP == 1 && acaoB == 1) {
