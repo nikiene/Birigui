@@ -497,7 +497,7 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Durante o jogo agora voce vai precisar marcar alguns set para vencer do seu adversario. Para se ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "movimentar para esquerda e direita utilize as teclas 'A'(esquerda) e 'D'(direita). Voce so ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "precisa chegar perto o suficiente para rebater. Quem fizer 3 pontos primeiro marca um set ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "e quem fizer 3 sets primeiro vence. Boa sorte! ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "e quem fizer 2 sets primeiro vence. Boa sorte! ");
 					}
 					else if (contador == 3 && npc_fala == 1)
 					{
