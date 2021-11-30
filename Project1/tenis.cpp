@@ -188,13 +188,14 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	}
 
 
-	if (setsPlayer == 3) {
+	if (setsPlayer == 1) {
 		al_clear_to_color(al_map_rgb(0, 255, 0));
-		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce ganhou!");
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthSkate / 2 - widthSkate / 4, heightSkate / 2, 0, "Voce ganhou!");
+		pontoTenis++;
 	}
 	else {
 		al_clear_to_color(al_map_rgb(255, 0, 0));
-		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce perdeu!");
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthSkate / 2 - widthSkate / 4, heightSkate / 2, 0, "Voce perdeu!");
 	}
 	al_flip_display();
 

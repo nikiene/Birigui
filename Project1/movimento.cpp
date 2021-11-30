@@ -108,13 +108,13 @@ int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes) {
 	}
 	if (ball.y <= 0 || ball.y >= height) {
 		if (ball.y <= 0) {
-			if (++pontosPlayer == 5) {
+			if (++pontosPlayer == 3) {
 				zeraPontuacao();
 				setsPlayer++;
 			}
 		}
 		else if (ball.y >= height) {
-			if (++pontosBot == 5) {
+			if (++pontosBot == 3) {
 				zeraPontuacao();
 				setsBot++;
 			}

@@ -26,6 +26,8 @@ extern void DrawPlantas(Plantas plantas[], int size);
 
 extern void DrawParallax(Parallax& parallax);
 
+extern void DrawBitmap(ALLEGRO_BITMAP* bitmap, int x, int y);
+
 extern void PlaySound(ALLEGRO_SAMPLE* sample);
 
 extern void PlaySoundBaixo(ALLEGRO_SAMPLE* sample);

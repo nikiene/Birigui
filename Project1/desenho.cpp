@@ -11,7 +11,7 @@
 
 
 void drawPlayer(Player& p) {
-	al_draw_bitmap(p.sprite, p.x, p.y, 0);
+	al_draw_bitmap(p.sprite, p.x, p.y, ALLEGRO_FLIP_HORIZONTAL);
 }
 
 void drawBall(Ball& b) {
@@ -176,4 +176,9 @@ void desenhaObstaculos(Obstaculos obstaculos[], int quantidade) {
 			al_draw_bitmap_region(obstaculos[i].imagemObstaculos, obstaculos[i].curFrame * obstaculos[i].frameLargura, 0, obstaculos[i].frameLargura, obstaculos[i].frameAltura, obstaculos[i].posX - 20, obstaculos[i].posY - 30, 0);
 		}
 	}
+}
+
+extern void DrawBitmap(ALLEGRO_BITMAP* bitmap, int x, int y) {
+	al_draw_bitmap(bitmap, x, y, 0);
+	al_destroy_bitmap(bitmap);
 }

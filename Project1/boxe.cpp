@@ -19,9 +19,8 @@
 int boxe(ALLEGRO_DISPLAY* display) 
 {
     ALLEGRO_EVENT_QUEUE* fila_eventos = NULL;
-    ALLEGRO_BITMAP* player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL, * final = NULL;
+    ALLEGRO_BITMAP* player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL, * final = NULL, * background = NULL;
     ALLEGRO_AUDIO_STREAM* musica = NULL;
-    ALLEGRO_BITMAP* background;
     ALLEGRO_SAMPLE* sample = NULL;
     int PL = 3, BL = 3;
 
@@ -341,7 +340,6 @@ int boxe(ALLEGRO_DISPLAY* display)
 
 
             final = al_load_bitmap("botwin.png");
-            al_draw_bitmap(final, 0, 0, 0);
             al_flip_display();
             al_rest(3.0);
             sair = true;
@@ -377,9 +375,9 @@ int boxe(ALLEGRO_DISPLAY* display)
         else {
 
             final = al_load_bitmap("playerwin.jpg");
-            al_draw_bitmap(final, 0, 0, 0);
             al_flip_display();
             al_rest(3.0);
+            pontoBoxe++;
             sair = true;
         }
 
@@ -394,40 +392,46 @@ int boxe(ALLEGRO_DISPLAY* display)
         al_set_target_bitmap(al_get_backbuffer(display));
 
 
-
-        al_draw_bitmap(jeb, 80, 380, 0);
         jeb = al_load_bitmap("jeb.png");
+        al_draw_bitmap(jeb, 80, 380, 0);
 
 
-
-        al_draw_bitmap(gancho, 480, 380, 0);
         gancho = al_load_bitmap("combo.png");
 
+        al_draw_bitmap(gancho, 480, 380, 0);
 
 
-        al_draw_bitmap(chute, 280, 380, 0);
         chute = al_load_bitmap("chute.png");
 
-        al_draw_bitmap(final, 0, 0, 0);
+        al_draw_bitmap(chute, 280, 380, 0);
+
+        if (sair == true) {
+            al_draw_bitmap(final, 0, 0, 0);
+        }
 
 
         // Atualiza a tela
         al_flip_display();
+        al_destroy_bitmap(jeb);
+        al_destroy_bitmap(chute);
+        al_destroy_bitmap(gancho);
+        al_destroy_bitmap(vida_p);
+        al_destroy_bitmap(vida_b);
+        al_destroy_bitmap(final);
+        al_destroy_bitmap(player);
+        al_destroy_bitmap(bot);
+        al_destroy_bitmap(background);
     }
 
 
     // Desaloca os recursos utilizados na aplicação
 
-    al_destroy_bitmap(player);
-    al_destroy_bitmap(bot);
+    //ALLEGRO_BITMAP* player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL, * final = NULL, * background = NULL;
+
     al_destroy_display(display);
     al_destroy_event_queue(fila_eventos);
-    al_destroy_bitmap(jeb);
-    al_destroy_bitmap(chute);
-    al_destroy_bitmap(gancho);
     al_destroy_audio_stream(musica);
     al_destroy_sample(sample);
-    al_destroy_bitmap(background);
 
     return 0;
 }

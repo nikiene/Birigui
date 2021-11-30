@@ -238,6 +238,7 @@ int surf(ALLEGRO_DISPLAY* display)
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		al_draw_textf(fontGameOver, al_map_rgb(255, 255, 255), widthSurf / 2, heightSurf / 2, ALLEGRO_ALIGN_CENTER, "Voce venceu!");
 		al_flip_display();
+		pontoSurf++;
 		al_rest(2.0);
 	}
 	else {

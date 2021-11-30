@@ -190,6 +190,7 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 				DrawText(jogador, segundos, minutos);
 				al_flip_display();
 				al_rest(5.5);
+				pontoSkate++;
 				done = true;
 			}
 

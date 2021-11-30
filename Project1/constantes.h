@@ -20,3 +20,5 @@ extern int heightBoxe;
 extern int widthBoxe;
 
 extern int acaoP, acaoB;
+
+extern int pontoSkate, pontoBoxe, pontoTenis, pontoSurf;

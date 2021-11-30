@@ -91,6 +91,7 @@ int main(int argc, char** argv)
 	ALLEGRO_TIMER* timer;
 	ALLEGRO_TIMER* playerTimer;
 	ALLEGRO_FONT* font18 = NULL;
+	ALLEGRO_FONT* font50 = NULL;
 	ALLEGRO_BITMAP* bgSheet = NULL;
 	ALLEGRO_BITMAP* npc = NULL;
 
@@ -131,6 +132,7 @@ int main(int argc, char** argv)
 	yoff = -80 * 5.5;
 
 	font18 = al_load_font("arial.ttf", 18, 0);//font de texto
+	font50 = al_load_font("arial.ttf", 50, 0);//font de texto
 
 	ball1.image = al_load_bitmap("playerImg.png");// imagem o player  animacao
 
@@ -163,18 +165,24 @@ int main(int argc, char** argv)
 	al_start_timer(timer);
 	while (!done)
 	{
+		printf("Tenis - %d, Skate - %d, Surf -%d, Boxe -%d", pontoTenis, pontoSkate, pontoSurf, pontoBoxe);
 		while (inGame == false)
 		{
+			int somaPontos = pontoBoxe + pontoSkate + pontoSurf + pontoTenis;
 			ALLEGRO_EVENT ev;
 			al_wait_for_event(event_queue, &ev);
 			al_get_keyboard_state(&keyState);//animacao
-
+			if (somaPontos >= 4) {
+				inGame = true;
+				done = true;
+			}
 			//movimentação
 			if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 			{
 				switch (ev.keyboard.keycode)
 				{
 				case ALLEGRO_KEY_ESCAPE:
+					inGame = true;
 					done = true;
 					break;
 				case ALLEGRO_KEY_LEFT:
@@ -454,6 +462,7 @@ int main(int argc, char** argv)
 						tenis(displayTenis);
 						al_set_target_backbuffer(display);
 						inGame = false;
+						al_rest(2.0);
 					}
 
 					else if (contador > 3 && npc_fala == 1) {
@@ -488,6 +497,7 @@ int main(int argc, char** argv)
 						skate(displaySkate);
 						al_set_target_backbuffer(display);
 						inGame = false;	
+						al_rest(2.0);
 					}
 					else if (contador > 3 && npc_fala == 2) {
 						contador = 0;
@@ -516,7 +526,7 @@ int main(int argc, char** argv)
 						surf(displaySurf);
 						al_set_target_backbuffer(display);
 						inGame = false;
-						
+						al_rest(2.0);
 					}
 
 					else if (contador > 3 && npc_fala == 3) {
@@ -586,6 +596,7 @@ int main(int argc, char** argv)
 						contador = 0;
 						al_set_target_backbuffer(display);
 						inGame = false;
+						al_rest(2.0);
 					}
 					else if(contador > 4 && npc_fala == 5){
 						contador = 0;
@@ -629,6 +640,12 @@ int main(int argc, char** argv)
 		}
 	}
 	//DESTROY ALLEGRO OBJECTS
+	if (pontoBoxe + pontoSkate + pontoSurf + pontoTenis == 4) {
+		al_clear_to_color(al_map_rgb(0, 255, 0));
+		al_draw_text(font50, al_map_rgb(255, 255, 255), width / 2, height / 2, ALLEGRO_ALIGN_CENTER, "Voce venceu!");
+		al_flip_display();
+		al_rest(5.0);
+	}
 
 	al_destroy_font(font18);
 	al_destroy_timer(timer);
