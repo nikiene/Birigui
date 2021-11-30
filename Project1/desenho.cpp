@@ -2,13 +2,15 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5\allegro_acodec.h>
+#include <allegro5\allegro_audio.h>
 #include "movimento.h"
 #include "constantes.h"
 #include "placar.h"
 
 
 void drawPlayer(Player& p) {
-	al_draw_bitmap(p.sprite, p.x1, p.y1, 0);
+	al_draw_bitmap(p.sprite, p.x, p.y, 0);
 }
 
 void drawBall(Ball& b) {
@@ -44,4 +46,8 @@ void DrawPassedObstaculo(Obstaculo obstaculo[], int size) {
 			al_draw_filled_rectangle(obstaculo[i].x1, obstaculo[i].y1, obstaculo[i].x2, obstaculo[i].y2, al_map_rgb(0, 255, 0));
 		}
 	}
+}
+
+void PlaySound(ALLEGRO_SAMPLE* sample) {
+	al_play_sample(sample, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
 }

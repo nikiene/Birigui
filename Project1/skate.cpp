@@ -13,7 +13,8 @@
 #include "movimento.h"
 
 
-int skate(ALLEGRO_DISPLAY* display) {
+/*
+int skate(ALLEGRO_DISPLAY* displaySkate) {
 	bool done = false;
 	bool redraw = true;
 	const int FPS = 60;
@@ -26,12 +27,6 @@ int skate(ALLEGRO_DISPLAY* display) {
 	ALLEGRO_TIMER* obstaculoTimer = NULL;
 	ALLEGRO_TIMER* updateObstaculoTimer = NULL;
 	ALLEGRO_TIMER* gameTime = NULL;
-
-	if (!al_init())
-		return -1;
-
-	if (!display)
-		return -1;
 
 	al_init_primitives_addon();
 	al_install_keyboard();
@@ -51,7 +46,7 @@ int skate(ALLEGRO_DISPLAY* display) {
 	al_register_event_source(event_queue, al_get_timer_event_source(gameTimer));
 	al_register_event_source(event_queue, al_get_timer_event_source(obstaculoTimer));
 	al_register_event_source(event_queue, al_get_timer_event_source(updateObstaculoTimer));
-	al_register_event_source(event_queue, al_get_display_event_source(display));
+	al_register_event_source(event_queue, al_get_display_event_source(displaySkate));
 
 	ALLEGRO_FONT* font18 = al_load_font("Roboto-Regular.ttf", 18, 0);
 
@@ -190,7 +185,8 @@ int skate(ALLEGRO_DISPLAY* display) {
 	}
 
 
-	al_destroy_display(display);
+	al_destroy_display(displaySkate);
 
 	return 0;
 }
+*/

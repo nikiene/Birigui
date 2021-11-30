@@ -3,22 +3,29 @@
 
 struct Player {
 	int id;
-	int x1;
-	int y1;
-	int x2;
-	int y2;
-	int hitboxX1;
-	int hitboxX2;
-	int hitBoxY1;
-	int hitBoxY2;
+	int x;
+	int y;
+	int width;
+	int height;
+
 	ALLEGRO_BITMAP* sprite;
 };
 
 struct Ball {
 	int x;
 	int y;
+	int width;
+	int height;
+	double xDir;
+	int yDir;
 	double raio;
 	ALLEGRO_BITMAP* sprite;
+};
+
+enum COLISAO {
+	NAOCOLIDIU,
+	X,
+	Y
 };
 
 enum IDS {
