@@ -520,8 +520,8 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora como jogar, para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita  ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "e a tecla 'W', seta pra cima ou espaco para pulas e se quiser sair do minigame so pressionar a tecla 'esc'.");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode pular por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "ou 'x' No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode ser pulado por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
 					}
 
 					else if (contador == 3 && npc_fala == 2) {
@@ -542,7 +542,7 @@ int main(int argc, char** argv)
 					if (contador == 1 && npc_fala == 3) {
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Parece que temos um desafiante, pode me chamar de Talonito, sabia que o surf e conhecido como o ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'esporte dos Deuse'. Na Polinésia, somente os reis podiam pratica-lo em pe na prancha enquanto os ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'esporte dos Deuse'. Na Polinesia, somente os reis podiam pratica-lo em pe na prancha enquanto os ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "suditos deveriam ficar deitados por isso que nao se deve subestimar o surf.");
 
 					}
@@ -551,7 +551,7 @@ int main(int argc, char** argv)
 					{
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora, para vencer esse desafio voce precisa coletar 5 medalhas, voce pode se movimentar utilizando ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "as setas que tem ai no teclado para ir pra cima, baixo, direita e esquerda, boa sorte.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "as teclas 'W,S,D,A' para ir pra cima, baixo, direita e esquerda, boa sorte.");
 					}
 					else if (contador == 3 && npc_fala == 3)
 					{
@@ -574,8 +574,8 @@ int main(int argc, char** argv)
 					//fala npc meio
 					if (contador == 1 && npc_fala == 4) {
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Para andar pressione as setas do teclado e para interagir com os npc clique na tecla 'z'.");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "Oi, voce pode me chamar de 'Shodito', e irei te falar onde estao os lugares para voce jogar");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Para andar pressione as teclas 'w,s,a,d', do teclado e para interagir com os npc clique na tecla");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'z'. Oi, voce pode me chamar de 'Shodito', e irei te falar onde estao os lugares para voce jogar");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e tambem vou falar sobre umas curiosidades sobre as olimpiadas que pode te interessar eu acho.");
 
 					}
@@ -607,12 +607,12 @@ int main(int argc, char** argv)
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Que tal tentar jogar uma partida de Boxe, pode me chamar de Branquito, sabia que ele era ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "popular na Inglaterra nos seculos XVIII e XIX, as lutas eram feitas com as maos descobertas ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e muito brutais e ele so foi reformado em 1867 com as Regras de Quensberry, que previam rounds ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "de três minutos e o uso de luvas, so entraram em vigor em 1872.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "de tres minutos e o uso de luvas, so entraram em vigor em 1872.");
 					}
 					else if (contador == 2 && npc_fala == 5)
 					{
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, o jogo é baseado em prever a habilidade do inimigo, voce");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, o jogo e baseado em prever a habilidade do inimigo, voce");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "tem 3 opcoes de habilidade, sendo elas 'jeb', 'chute' e 'combo' cada um tem uma certa vantagem ");//continuar com a fala depois
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "sobre a outra, para nocautear o inimigo, tera que acertar 5 golpes nele.");
 
@@ -620,7 +620,7 @@ int main(int argc, char** argv)
 					else if (contador == 3 && npc_fala == 5)
 					{
 						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "a ordem de vantagens é:");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "a ordem de vantagens e:");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "JEB > CHUTE > COMBO > JEB ");
 
 					}
@@ -642,7 +642,7 @@ int main(int argc, char** argv)
 
 				if (collision)//quando acontecer o colisao o player volta para o lado oposto que veio
 				{
-					al_draw_text(font18, al_map_rgb(255, 255, 0), width / 2, 20, ALLEGRO_ALIGN_CENTRE, "Collision!");
+					
 					if (keys[RIGHT] == true)
 					{
 						keys[RIGHT] = false;
