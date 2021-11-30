@@ -22,7 +22,7 @@ const char* combat(int acaoP, int acaoB) {
     }
     else if (acaoP == 1 && acaoB == 2) {
         PL = PL - 1;
-        return "o jogador 1 levou um gancho em cheio!\n";
+        return "o jogador 1 levou um combo em cheio!\n";
     }
     else if (acaoP == 1 && acaoB == 3) {
         BL = BL - 1;
@@ -30,7 +30,7 @@ const char* combat(int acaoP, int acaoB) {
     }
     else if (acaoP == 2 && acaoB == 1) {
         BL = BL - 1;
-        return "o jogador 2 levou um gancho em cheio!\n";
+        return "o jogador 2 levou um combo em cheio!\n";
     }
     else if (acaoP == 2 && acaoB == 2) {
         return "os golpes se encontram, mas não machucam nenhum dos lutadores!\n";
@@ -356,7 +356,7 @@ int main(void)
         }
         else if(acaoB == 2)
         {   
-            bot = al_load_bitmap("chute_b.png");
+            bot = al_load_bitmap("varios_b.png");
             al_set_target_bitmap(al_get_backbuffer(janela));
             al_draw_bitmap(bot, 340, 122, 0);
      
@@ -364,7 +364,7 @@ int main(void)
         }else if(acaoB == 3)
         {   
             
-            bot = al_load_bitmap("varios_b.png");
+            bot = al_load_bitmap("chute_b.png");
             al_set_target_bitmap(al_get_backbuffer(janela));
             al_draw_bitmap(bot, 340, 122, 0);
            
@@ -405,7 +405,7 @@ int main(void)
            
             final = al_load_bitmap("botwin.png");
             al_draw_bitmap(final, 0, 0, 0);
-            al_rest(1.0);
+            al_rest(0.5);
         }
 
         //vida bot
@@ -438,8 +438,9 @@ int main(void)
         else {
         
             final = al_load_bitmap("playerwin.jpg");
-            al_draw_bitmap(final, 0, 0, 0);  
-            al_rest(1.0);
+            al_draw_bitmap(final, 0, 0, 0);
+            al_rest(0.5);
+          
 
         }
         
