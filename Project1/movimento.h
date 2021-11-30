@@ -5,14 +5,13 @@
 
 //Variáveis
 extern double aceleracao;
-extern int ballXDirection;
-extern int ballYDirection;
 extern int velocidadeBase;
 
 extern bool pulo;
 extern int velocidadeMaxPulo;
 extern int gravidade;
 extern int velocidadePulo;
+extern bool colidiuAntes;
 
 extern bool keysHub[6];
 
@@ -23,7 +22,7 @@ void movementRight(Player& p);
 
 void moveBall(Ball& b);
 
-bool colide(Ball& ball, Player& player, Player& bot, bool passouPlayer, bool passouBot);
+int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes);
 
 bool passouDoBot(Ball& ball, Player& player, Player& bot);
 

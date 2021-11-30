@@ -13,9 +13,7 @@
 #include "skate.cpp"
 
 //Variáveis
-double aceleracao = 1.0;
-int ballXDirection = 1;
-int ballYDirection = 1;
+double aceleracao = 1.1;
 int velocidadeBase = 10;
 bool keys[6] = {
 	false,
@@ -30,66 +28,82 @@ bool pulo = false;
 int velocidadeMaxPulo = 16;
 int gravidade = 1;
 int velocidadePulo = velocidadeMaxPulo;
+bool colidiuAntes = false;
 
 
 void movementLeft(Player& p) {
-	p.x1 -= 50;
-	p.x2 -= 50;
-	p.hitboxX1 -= 50;
-	p.hitboxX2 -= 50;
+	p.x -= 30;
 }
 
 void movementRight(Player& p) {
-	p.x1 += 50;
-	p.x2 += 50;
-	p.hitboxX1 += 50;
-	p.hitboxX2 += 50;
+	p.x += 30;
 }
 
 void moveBall(Ball& b) {
 	al_draw_filled_circle(b.x, b.y, b.raio, al_map_rgb(0, 0, 0));
-	b.x += ((velocidadeBase / 4) * aceleracao) * ballXDirection;
-	b.y += (velocidadeBase * aceleracao) * ballYDirection;
+	b.x += ((velocidadeBase / 4) * aceleracao) * b.xDir;
+	b.y += (velocidadeBase * aceleracao) * b.yDir;
 	aceleracao += 0.002;
 
 }
-
-bool colide(Ball& ball, Player& player, Player& bot, bool passouPlayer, bool passouBot) {
-	int botDiff = bot.x2 - bot.x1;
-	int playerDiff = player.x2 - player.x1;
+/*
+	return 0 -> Não colidiu
+	return 1 -> Colidiu ou com o player
+	return 2 -> Colidiu com o bot
+	return 3 -> Colidiu com as extremidades Y do cenário
+	return 4 -> Colidiu com o canto esquerdo do cenário
+	return 5 -> Colidiu com o canto direito do cenário
+*/
+int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes) {
+	
+	int movimentoBolaX = (ball.x + (velocidadeBase / 4) * aceleracao);
+	int movimentoBolaY = (ball.y + (velocidadeBase * aceleracao));
 
 	//Colisão com o jogador
-	if ((ball.x >= player.hitboxX1 && ball.x <= player.hitboxX2) && (ball.y >= player.hitBoxY1 + 15 && ball.y <= player.hitBoxY2 && passouPlayer)) {
-		if (ball.x - player.hitboxX1 > player.hitboxX2 - ball.x) {
-			ballXDirection = 0.8;
-		}
-		else if (ball.x - player.hitboxX1 < player.hitboxX2 - ball.x)
-			ballXDirection = -0.8;
-		else
-			ballXDirection = 0;
-		ballYDirection *= -1;
-		return true;
+	if (player.x <= ball.x + ball.width &&
+		player.x + player.width >= ball.x &&
+		player.y <= ball.y + ball.height &&
+		player.y + player.height >= ball.y) {
 
+		if (ball.x - bot.x > (player.x + player.width) - ball.x) {
+			ball.xDir = 0.8;
+		}
+		else if (ball.x - player.x < (player.x + player.width) - ball.x) {
+			ball.xDir = -0.8;
+		}
+		else
+			ball.xDir = 0;
+
+		return 1;
 	}
+
 	//Colisão com o bot
-	if ((ball.x >= bot.hitboxX1 && ball.x <= bot.hitboxX2) && (ball.y >= bot.hitBoxY1 && ball.y <= bot.hitBoxY2) && passouBot) {
-		if (ball.x - bot.hitboxX1 > bot.hitboxX2 - ball.x) {
-			ballXDirection = -0.8;
+	
+	if (bot.x <= ball.x + ball.width &&
+		bot.x + bot.width >= ball.x &&
+		bot.y <= ball.y + ball.height &&
+		bot.y + bot.height >= ball.y) {
+
+		if (ball.x - bot.x > (bot.x + bot.width) - ball.x) {
+			ball.xDir = 0.8;
 		}
-		else if (ball.x - bot.hitboxX1 < bot.hitboxX2 - ball.x)
-			ballXDirection = 0.8;
+		else if (ball.x - bot.x < (bot.x + bot.width) - ball.x) {
+			ball.xDir = -0.8;
+		}
 		else
-			ballXDirection = 0;
-		ballYDirection *= -1;
-		return true;
-
+			ball.xDir = 0;
+		return 2;
 	}
+
 	//Colisão com os cantos
-	if (ball.x >= (7 * width) / 8 - 30 || ball.x <= (width / 8) + 30) {
-		ballXDirection *= -1;
-		return true;
+
+	if (ball.x + ball.width >= (7 * width) / 8 - 30) {
+		return 5;
 	}
 
+	if (ball.x + ball.width <= (width / 8) + 30) {
+		return 4;
+	}
 	if (ball.y <= 0 || ball.y >= height) {
 		if (ball.y <= 0) {
 			if (++pontosPlayer == 5) {
@@ -103,25 +117,23 @@ bool colide(Ball& ball, Player& player, Player& bot, bool passouPlayer, bool pas
 				setsBot++;
 			}
 		}
-		aceleracao = 1.0;
-		ballYDirection *= -1;
+		aceleracao = 1.1;
 		ball.x = width / 2;
 		ball.y = height / 2;
-		return true;
+		return 3;
 	}
 
-	return false;
+	return 0;
 }
-
 bool passouDoPlayer(Ball& ball, Player& player, Player& bot) {
-	if (ball.y < player.y1) {
+	if (ball.y < player.y) {
 		return true;
 	}
 	return false;
 }
 
 bool passouDoBot(Ball& ball, Player& player, Player& bot) {
-	if (ball.y < bot.y1) {
+	if (ball.y < bot.y) {
 		return true;
 	}
 	return false;
