@@ -408,6 +408,16 @@ int main(void)
             al_draw_bitmap(final, 0, 0, 0);
             al_flip_display();
             al_rest(3.0);
+            al_destroy_bitmap(player);
+            al_destroy_bitmap(bot);
+            al_destroy_display(janela);
+            al_destroy_event_queue(fila_eventos);
+            al_destroy_bitmap(jeb);
+            al_destroy_bitmap(chute);
+            al_destroy_bitmap(gancho);
+            al_destroy_audio_stream(musica);
+            al_destroy_sample(sample);
+            al_destroy_bitmap(background);
             return -2;
         }
 
@@ -439,10 +449,20 @@ int main(void)
         }
 
         else {
-        
+            
             final = al_load_bitmap("playerwin.jpg");
             al_draw_bitmap(final, 0, 0, 0);
             al_flip_display();
+            al_destroy_bitmap(player);
+            al_destroy_bitmap(bot);
+            al_destroy_display(janela);
+            al_destroy_event_queue(fila_eventos);
+            al_destroy_bitmap(jeb);
+            al_destroy_bitmap(chute);
+            al_destroy_bitmap(gancho);
+            al_destroy_audio_stream(musica);
+            al_destroy_sample(sample);
+            al_destroy_bitmap(background);
             al_rest(3.0);
             return -2;
           
