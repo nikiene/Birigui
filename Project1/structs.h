@@ -2,21 +2,36 @@
 #include <allegro5/allegro.h>
 
 struct Player {
-	int x1;
-	int y1;
-	int x2;
-	int y2;
+	int id;
+	int x;
+	int y;
+	int width;
+	int height;
+
+	ALLEGRO_BITMAP* sprite;
 };
 
 struct Ball {
 	int x;
 	int y;
+	int width;
+	int height;
+	double xDir;
+	int yDir;
 	double raio;
+	ALLEGRO_BITMAP* sprite;
+};
+
+enum COLISAO {
+	NAOCOLIDIU,
+	X,
+	Y
 };
 
 enum IDS {
 	JOGADOR,
-	OBSTACULOS
+	OBSTACULOS,
+	BOT
 };
 
 enum STATUS {
@@ -69,10 +84,10 @@ struct Obstaculo {
 };
 
 enum KEYS {
-	UP,
 	DOWN,
 	LEFT,
 	RIGHT,
+	UP,
 	SPACE,
 	Z
 };
@@ -120,4 +135,3 @@ struct Sprite
 
 	ALLEGRO_BITMAP* image;
 };
-

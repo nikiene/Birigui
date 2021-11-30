@@ -2,6 +2,8 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <stdio.h>
 #include "constantes.h"
 #include "desenho.h"
@@ -15,38 +17,54 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	ALLEGRO_TIMER* ballTimer = NULL;
 	ALLEGRO_TIMER* botTimer = NULL;
 	ALLEGRO_TIMER* colideTimer = NULL;
-	ALLEGRO_FONT* fontPlacarSets = NULL;
-	ALLEGRO_FONT* fontPlacarPontos = NULL;
+	ALLEGRO_FONT* fontHeader = NULL;
+	ALLEGRO_FONT* fontBody = NULL;
+	ALLEGRO_FONT* fontFinal = NULL;
+	ALLEGRO_BITMAP* bgSheet = NULL;
+	ALLEGRO_BITMAP* ballSheet = NULL;
+	ALLEGRO_SAMPLE* somBatida = NULL;
 
 	bool done = false;
 	bool redraw = false;
 	bool toRight = false;
 	bool toLeft = true;
+	bool mudouVelocidade1 = false;
+	bool mudouVelocidade2 = false;
+	int colidiu;
 
 	Player player;
 	Player bot;
 	Ball ball;
 
+	int xoff = 0;
+	int yoff = 0;
+
+	int mapColums = 20;
+	int mapSize = 400;
+	int titleSize = 80;
+
 	//Inicializando posição do bot e do jogador
 	initBot(bot);
 	initPlayer(player);
 	initBall(ball);
-	printf("Player - x1: %d x2: %d, y1: %d, y2: %d\n", player.x1, player.x2, player.y1, player.y2);
-	printf("Bot - x1: %d x2: %d, y1: %d, y2: %d", bot.x1, bot.x2, bot.y1, bot.y2);
 
 	//Inicialização de variáveis do allegro
 	event_queue = al_create_event_queue();
 	ballTimer = al_create_timer(0.05);
-	botTimer = al_create_timer(0.2);
-	colideTimer = al_create_timer(1.0 / 60.0);
-	fontPlacarPontos = al_load_font("fontePlacar.ttf", 20, NULL);
-	fontPlacarSets = al_load_font("fontePlacar.ttf", 25, NULL);
+	botTimer = al_create_timer(0.15);
+	colideTimer = al_create_timer(1.0 / 65.0);
+	fontBody = al_load_font("fontePlacar.ttf", 18, NULL);
+	fontHeader = al_load_font("fontePlacar.ttf", 25, NULL);
+	fontFinal = al_load_font("fontePlacar.ttf", 50, NULL);
+	bgSheet = al_load_bitmap("bgTenis.png");
+
+	somBatida = al_load_sample("batida_sample.wav");
 
 	//Desenhando player e bot
 	drawPlayer(player);
 	drawPlayer(bot);
 	drawBall(ball);
-	drawPlacar(fontPlacarPontos, fontPlacarSets);
+	drawPlacar(fontBody, fontHeader);
 	al_flip_display();
 
 	//Registrando as origens de evento
@@ -60,6 +78,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_start_timer(ballTimer);
 	al_start_timer(botTimer);
 
+
 	while (setsBot < 3 && setsPlayer < 3 && !done) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
@@ -70,7 +89,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			if (ev.timer.source == botTimer) {
 				if (toLeft) {
 					movementLeft(bot);
-					if (bot.x1 <= 0) {
+					if (bot.x <= (width / 8) || ball.x > bot.x + bot.width) {
 						toLeft = false;
 						toRight = true;
 					}
@@ -78,22 +97,55 @@ int tenis(ALLEGRO_DISPLAY* display) {
 				else {
 					if (toRight) {
 						movementRight(bot);
-						if (bot.x2 >= width) {
+						if (bot.x + bot.width >= (7 * width) / 8 || ball.x < bot.x) {
 							toLeft = true;
 							toRight = false;
 						}
 					}
 				}
 			}
-			//Movimentação da bola
-			if (ev.timer.source == ballTimer) {
-				moveBall(ball);
-			}
-
 			if (ev.timer.source == colideTimer) {
-				colide(ball, player, bot);
+				colidiu = colide(ball, player, bot, colidiuAntes);
 			}
+			//Movimentação da bola
+			/*
+			return 0 -> Não colidiu
+			return 1 -> Colidiu ou com o player
+			return 2 -> Colidiu com o bot
+			return 3 -> Colidiu com as extremidades Y do cenário
+			return 4 -> Colidiu com o canto esquerdo do cenário
+			return 5 -> Colidiu com o canto direito do cenário
+			*/
+			if (ev.timer.source == ballTimer) {
 
+				switch (colidiu) {
+					case 0:
+						moveBall(ball);
+						break;
+					case 1:
+						ball.yDir *= -1;
+						ball.y -= 5;
+						moveBall(ball);
+						PlaySound(somBatida);
+						break;
+					case 2:
+						ball.yDir *= -1;
+						ball.y += 5;
+						moveBall(ball);
+						PlaySound(somBatida);
+						break;
+					case 4:
+						ball.xDir *= -1;
+						ball.x += 5;
+						moveBall(ball);
+						break;
+					case 5:
+						ball.xDir *= -1;
+						ball.x -= 5;
+						moveBall(ball);
+						break;
+				}
+			}
 		}
 		//Evento de tecla
 		if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
@@ -102,20 +154,34 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_A) {
-				if (player.x1 > 0) {
+				if (player.x > (width / 8)) {
 					movementLeft(player);
-					printf("\nplayer x1: %d", player.x1);
 				}
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
-				if (player.x2 < width) {
+				if (player.x + player.width < (7 * width) / 8) {
 					movementRight(player);
-					printf("\nplayer x1: %d", player.x1);
 				}
 			}
 		}
-		drawPlacar(fontPlacarPontos, fontPlacarSets);
+		if (setsPlayer == 1) {
+			mudouVelocidade1 = true;
+			if (mudouVelocidade1) {
+				al_set_timer_speed(botTimer, 0.1);
+				mudouVelocidade1 = false;
+			}
+		}
+		else if (setsPlayer == 2) {
+			mudouVelocidade2 = true;
+			mudouVelocidade1 = false;
+			if (mudouVelocidade2) {
+				al_set_timer_speed(botTimer, 0.05);
+				mudouVelocidade2 = false;
+			}
+		}
+		al_draw_bitmap(bgSheet, 0, 0, 0);
+		drawPlacar(fontHeader, fontBody);
 		drawPlayer(player);
 		drawPlayer(bot);
 		drawBall(ball);
@@ -124,6 +190,17 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	}
 
 
+	if (setsPlayer == 3) {
+		al_clear_to_color(al_map_rgb(0, 255, 0));
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce ganhou!");
+	}
+	else if (setsBot == 3) {
+		al_clear_to_color(al_map_rgb(255, 0, 0));
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce perdeu!");
+	}
+	al_flip_display();
+
+	al_rest(3);
 	//Zerando 
 	zeraPlacar();
 
@@ -134,12 +211,13 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_destroy_timer(colideTimer);
 	al_destroy_timer(botTimer);
 	al_destroy_timer(ballTimer);
-	al_destroy_font(fontPlacarPontos);
-	al_destroy_font(fontPlacarSets);
+	al_destroy_font(fontHeader);
+	al_destroy_font(fontBody);
+	al_destroy_bitmap(player.sprite);
+	al_destroy_bitmap(bot.sprite);
+	al_destroy_bitmap(bgSheet);
 
 	aceleracao = 1;
-	ballYDirection = 1;
-	ballXDirection = 1;
 
 	return 0;
 }

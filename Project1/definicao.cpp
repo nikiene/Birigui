@@ -8,24 +8,34 @@
 int PL = 5, BL = 5;
 
 void initBot(Player& b) {
-	b.x1 = (width / 2) - 50;
-	b.y1 = height / 4;
-	b.x2 = (width / 2) + 50;
-	b.y2 = b.y1 + 25;
+	b.x = (width / 2) - 50;
+	b.y = height / 8;
+	b.width = 60;
+	b.height = 25;
+
+	b.sprite = al_load_bitmap("botSprite.png");
 }
 
 void initPlayer(Player& p) {
-	p.x1 = (width / 2) - 50;
-	p.y1 = (3 * height) / 4;
-	p.x2 = (width / 2) + 50;
-	p.y2 = p.y1 + 25;
+	p.id = JOGADOR;
+	p.x = (width / 2) - 50;
+	p.y = (3 * height) / 4;
+	p.width = 60;
+	p.height = 25;
+
+	p.sprite = al_load_bitmap("playerSprite.png");
 }
 
 void initBall(Ball& b) {
 	b.x = width / 2;
 	b.y = height / 2;
-	b.raio = 10.0;
+	b.width = 20;
+	b.height = 20;
+	b.raio = 5.5;
+	b.xDir = 1;
+	b.yDir = 1;
 }
+
 
 void InitObstaculo(Obstaculo obstaculo[], int size) {
 	for (int i = 0; i < size; i++) {

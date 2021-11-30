@@ -66,8 +66,7 @@ int main(int argc, char** argv)
 	Sprite ball1;//player
 	Sprite ball2;//npc
 
-	ball1.x = width / 2;
-	ball1.y = ((altura * 4) / 5) - 190;
+	
 
 	ball2.x = width / 2;
 	ball2.y = height / 2;
@@ -88,6 +87,7 @@ int main(int argc, char** argv)
 	ALLEGRO_DISPLAY* displaySkate = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer;
+	ALLEGRO_TIMER* playerTimer;
 	ALLEGRO_FONT* font18 = NULL;
 	ALLEGRO_BITMAP* bgSheet = NULL;
 	ALLEGRO_BITMAP* npc = NULL;
@@ -134,6 +134,9 @@ int main(int argc, char** argv)
 	ball1.w = al_get_bitmap_width(ball1.image);
 	ball1.h = al_get_bitmap_height(ball1.image);
 
+	ball1.x = width / 2;
+	ball1.y = ((height * 4) / 5) - 190;
+
 	ball2.w = 75;
 	ball2.h = 75;
 
@@ -155,8 +158,8 @@ int main(int argc, char** argv)
 
 	al_start_timer(timer);
 	while (!done)
-	{	
-		while (!done)
+	{
+		while (inGame == false)
 		{
 			ALLEGRO_EVENT ev;
 			al_wait_for_event(event_queue, &ev);
@@ -178,9 +181,9 @@ int main(int argc, char** argv)
 					break;
 				case ALLEGRO_KEY_RIGHT:
 					if (contador > 0)
-						keys[RIGTH] = false;
+						keys[RIGHT] = false;
 					else
-						keys[RIGTH] = true;
+						keys[RIGHT] = true;
 					break;
 				case ALLEGRO_KEY_UP:
 					if (contador > 0)
@@ -217,7 +220,7 @@ int main(int argc, char** argv)
 					keys[LEFT] = false;
 					break;
 				case ALLEGRO_KEY_RIGHT:
-					keys[RIGTH] = false;
+					keys[RIGHT] = false;
 					break;
 				case ALLEGRO_KEY_UP:
 					keys[UP] = false;
@@ -239,29 +242,29 @@ int main(int argc, char** argv)
 				render = true;
 				active = true;
 
-				if (keys[UP])
+				if (keys[UP] )
 				{
 					ball1.y -= 2;
 					yoff += keys[UP] * 5;
 					dir = UP;//animacao
 				}
-				else if (keys[DOWN])
+				else if (keys[DOWN] )
 				{
 					ball1.y += 2;
 					yoff -= keys[DOWN] * 5;
 					dir = DOWN;//animacao
 				}
-				else if (keys[LEFT])
+				else if (keys[LEFT] )
 				{
 					ball1.x -= 2;
 					xoff += keys[LEFT] * 5;
 					dir = LEFT;//animacao
 				}
-				else if (keys[RIGTH])
+				else if (keys[RIGHT] )
 				{
 					ball1.x += 2;
-					xoff -= keys[RIGTH] * 5;
-					dir = RIGTH;//animacao
+					xoff -= keys[RIGHT] * 5;
+					dir = RIGHT;//animacao
 				}
 				else if (explicacao)
 				{
@@ -326,7 +329,7 @@ int main(int argc, char** argv)
 
 
 				//falas e indação de qual npc esta interagindo no momento
-			//local fala do npc de cima
+				//local fala do npc de cima
 				if (ball1.x + (ball1.bx / 2) > ((70 * 8) + xoff) - ball2.bx &&
 					ball1.x + 10 < ((81 * 8) + xoff) + ball2.bx &&
 					ball1.y + (ball1.by / 2) > ((52 * 3) + yoff) - ball2.by &&
@@ -412,7 +415,7 @@ int main(int argc, char** argv)
 
 				}
 
-			
+
 
 				if (local_fala)//fala
 				{
@@ -424,34 +427,37 @@ int main(int argc, char** argv)
 					}
 					//fala npc cima >>tenis
 					if (contador == 1 && npc_fala == 1) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Vejo que voce esta interessado em tenis. Ja que e assim vou te explicar as regras mas primeiro ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "voce pode me chamar de 'Pedrito' mas voce sabia o saque mais rapido ja registrado pela Associacao");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "dos Tenista Profissionais foi dado em 2012 pelo australiano Samuel Groth, com incriveis 263km/h ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "durante o torneio de Busan, na Coreia do Sul e ainda encaixou mais 2 saques de 253km/h e de 255km/h.");
-						
+
 					}
 					else if (contador == 2 && npc_fala == 1)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "E no jogo agora voce vai precisar marcar alguns set para vencer do seu adversario, voce tambem pode");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "se movimentar para esquerda e direita utilizando as teclas 'A'(esquerda) e 'D'(direita). Voce so ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "precisa chegar perto o suficiente para rebater e bom jogo.");
 					}
 					else if (contador == 3 && npc_fala == 1)
 					{
-						contador = 0;
-						displayTenis = al_create_display(width, height);
+						inGame = true;
+						displayTenis = al_create_display(widthTenis, heightTenis);
 						tenis(displayTenis);
-
-					}
-					
+						al_set_target_backbuffer(display);
+						contador = 0;
 						
+						inGame = false;
+					}
+
+
 
 					//fala npc esquerda>>skate
 					if (contador == 1 && npc_fala == 2) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Parece que voce quer andar de Skate, sabia que ele surgiu na California, Estados Unidos, nos anos 60.");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "Foi inventado por alguns surfistas, como uma brincadeira para um dia no qual nao havia ondas no mar. ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "Eles utilizaram rodinhas de patins. Ja em 1965 foram fabricados os primeiros skates e realizados os");
@@ -475,54 +481,63 @@ int main(int argc, char** argv)
 						contador = 0;
 
 					}
-					else if (contador == 4 && npc_fala == 2)
+					else if (contador == 4 && npc_fala == 2) {
+						displaySkate = al_create_display(widthSkate, heightSkate);
+						inGame = true;
+						skate(displaySkate);
+						al_set_target_backbuffer(display);
 						contador = 0;
+						inGame = false;
+						
+					}
 
 					//fala npc direita>>surf
 					if (contador == 1 && npc_fala == 3) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Parece que temos um desafiante, pode me chamar de Talonito, sabia que o surf e conhecido como o ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'esporte dos Deuse'. Na Polinésia, somente os reis podiam pratica-lo em pe na prancha enquanto os ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "suditos deveriam ficar deitados por isso que nao se deve subestimar o surf.");
-						
+
 					}
 					else if (contador == 2 && npc_fala == 3)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora, para vencer esse desafio voce precisa coletar 5 medalhas, voce pode se movimentar utilizando ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "as setas que tem ai no teclado para ir pra cima, baixo, direita e esquerda, boa sorte.");
 					}
 					else if (contador == 3 && npc_fala == 3)
 					{
 						contador = 0;
-						displaySurf = al_create_display(width, height);
-						surf(displaySurf);
 						inGame = true;
-
-					}
-					
+						displaySurf = al_create_display(widthSurf, heightSurf);
+						surf(displaySurf);
+						al_set_target_backbuffer(display);
+						inGame = false;
 						
+					}
+
+
 
 					//fala npc meio
 					if (contador == 1 && npc_fala == 4) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Para andar precione as setas do teclado e para interagir com os npc clique na tecla 'z'.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Para andar pressione as setas do teclado e para interagir com os npc clique na tecla 'z'.");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "Oi, voce pode me chamar de 'Shodito', e irei te falar onde estao os lugares para voce jogar");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e tambem vou falar sobre umas curiosidades sobre as olimpiadas que pode te interessar eu acho.");
-						
+
 					}
 					else if (contador == 2 && npc_fala == 4)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Voce sabia que os JOGOS Olimpicos se originaram na Grecia Antiga numa cidade de Olimpiaonde tiveram ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "um forte vinculo religioso e erm dedicados a Zeus(Deus dos deuses dentro da mitologia grega)");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e que as argolas na bandeira das olimpiadas representa os 5 continentes habitados no mundo.");
 					}
 					else if (contador == 3 && npc_fala == 4)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora vou falar onde voce pode jogar, falando com o cara la em cima voce pode joga um ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "pouco de tenis mas se quiser pode jogar quantas vezes quiser indo pela direita voce ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "pode surfar falando com a passoa, na direcao de baixo pode praticar um boxe e na esquerda ");
@@ -532,12 +547,11 @@ int main(int argc, char** argv)
 					else if (contador == 4 && npc_fala == 4)
 					{
 						contador = 0;
-						
 					}
 					//fala npc comeco // baixo>>>boxe
 					if (contador == 1 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Que tal tentar jogar uma partida de Boxe, pode me chamar de Branquito, sabia que ele era ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "popular na Inglaterra nos seculos XVIII e XIX, as lutas eram feitas com as maos descobertas ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e muito brutais e ele so foi reformado em 1867 com as Regras de Quensberry, que previam rounds ");
@@ -560,9 +574,10 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 4 && npc_fala == 5)
 					{
+            inGame = true;
 						displayBoxe = al_create_display(width, height);
 						boxe(displayBoxe);
-						inGame = true;
+            al_set_target_backbuffer(display);
 						contador = 0;
 					}
 				}
