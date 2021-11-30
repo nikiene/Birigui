@@ -196,6 +196,8 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	al_rest(3);
 	//Zerando 
 	zeraPlacar();
+	for (int i = 0; i < 6; i++)
+		keys[i] = false;
 
 
 	//destroys

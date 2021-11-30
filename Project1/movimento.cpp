@@ -99,11 +99,11 @@ int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes) {
 
 	//Colisão com os cantos
 
-	if (ball.x + ball.width >= (7 * width) / 8 - 30) {
+	if (ball.x + ball.width >= (7 * widthTenis) / 8 - 30) {
 		return 5;
 	}
 
-	if (ball.x + ball.width <= (width / 8) + 30) {
+	if (ball.x + ball.width <= (widthTenis / 8) + 30) {
 		return 4;
 	}
 	if (ball.y <= 0 || ball.y >= height) {

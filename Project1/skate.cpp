@@ -298,6 +298,10 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 
 	}
 
+	for (int i = 0; i < 6; i++)
+		keys[i] = false;
+
+
 	aux = false;
 
 	al_destroy_bitmap(bgImage);

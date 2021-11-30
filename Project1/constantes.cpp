@@ -11,7 +11,6 @@
  int widthTenis = 800;
  int heightTenis = 800;
 
-
  int heightSkate = 480;
  int widthSkate = 640;
 

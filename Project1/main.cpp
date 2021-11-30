@@ -172,10 +172,7 @@ int main(int argc, char** argv)
 			ALLEGRO_EVENT ev;
 			al_wait_for_event(event_queue, &ev);
 			al_get_keyboard_state(&keyState);//animacao
-			if (somaPontos >= 4) {
-				inGame = true;
-				done = true;
-			}
+			
 			//movimentação
 			if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 			{
@@ -204,6 +201,30 @@ int main(int argc, char** argv)
 						keys[UP] = true;
 					break;
 				case ALLEGRO_KEY_DOWN:
+					if (contador > 0)
+						keys[DOWN] = false;
+					else
+						keys[DOWN] = true;
+					break;
+				case ALLEGRO_KEY_A:
+					if (contador > 0)
+						keys[LEFT] = false;
+					else
+						keys[LEFT] = true;
+					break;
+				case ALLEGRO_KEY_D:
+					if (contador > 0)
+						keys[RIGHT] = false;
+					else
+						keys[RIGHT] = true;
+					break;
+				case ALLEGRO_KEY_W:
+					if (contador > 0)
+						keys[UP] = false;
+					else
+						keys[UP] = true;
+					break;
+				case ALLEGRO_KEY_S:
 					if (contador > 0)
 						keys[DOWN] = false;
 					else
@@ -238,6 +259,18 @@ int main(int argc, char** argv)
 					keys[UP] = false;
 					break;
 				case ALLEGRO_KEY_DOWN:
+					keys[DOWN] = false;
+					break;
+				case ALLEGRO_KEY_A:
+					keys[LEFT] = false;
+					break;
+				case ALLEGRO_KEY_D:
+					keys[RIGHT] = false;
+					break;
+				case ALLEGRO_KEY_W:
+					keys[UP] = false;
+					break;
+				case ALLEGRO_KEY_S:
 					keys[DOWN] = false;
 					break;
 				case ALLEGRO_KEY_SPACE:
@@ -460,12 +493,13 @@ int main(int argc, char** argv)
 						inGame = true;
 						displayTenis = al_create_display(widthTenis, heightTenis);
 						tenis(displayTenis);
+						al_flush_event_queue(event_queue);
 						al_set_target_backbuffer(display);
 						inGame = false;
-						al_rest(2.0);
 					}
 
 					else if (contador > 3 && npc_fala == 1) {
+						al_rest(0.5);
 						contador = 0;
 					}
 
@@ -495,11 +529,12 @@ int main(int argc, char** argv)
 						contador = 0;
 						displaySkate = al_create_display(widthSkate, heightSkate);
 						skate(displaySkate);
+						al_flush_event_queue(event_queue);
 						al_set_target_backbuffer(display);
 						inGame = false;	
-						al_rest(2.0);
 					}
 					else if (contador > 3 && npc_fala == 2) {
+						al_rest(0.5);
 						contador = 0;
 					}
 
@@ -524,12 +559,13 @@ int main(int argc, char** argv)
 						inGame = true;
 						displaySurf = al_create_display(widthSurf, heightSurf);
 						surf(displaySurf);
+						al_flush_event_queue(event_queue);
 						al_set_target_backbuffer(display);
 						inGame = false;
-						al_rest(2.0);
 					}
 
 					else if (contador > 3 && npc_fala == 3) {
+						al_rest(0.5);
 						contador = 0;
 					}
 
@@ -593,13 +629,14 @@ int main(int argc, char** argv)
 						inGame = true;
 						displayBoxe = al_create_display(widthBoxe, heightBoxe);
 						boxe(displayBoxe);
-						contador = 0;
+						al_flush_event_queue(event_queue);
 						al_set_target_backbuffer(display);
 						inGame = false;
-						al_rest(2.0);
+						contador++;
 					}
 					else if(contador > 4 && npc_fala == 5){
 						contador = 0;
+						al_rest(0.5);
 					}
 				}
 
@@ -632,6 +669,11 @@ int main(int argc, char** argv)
 						yoff -= 17;
 					}
 
+				}
+
+				if (somaPontos >= 4) {
+					inGame = true;
+					done = true;
 				}
 
 				al_flip_display();

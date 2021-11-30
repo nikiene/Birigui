@@ -16,7 +16,7 @@
 #include "structs.h"
 #include "jogos.h"
 
-int boxe(ALLEGRO_DISPLAY* display) 
+int boxe(ALLEGRO_DISPLAY* display)
 {
     ALLEGRO_EVENT_QUEUE* fila_eventos = NULL;
     ALLEGRO_BITMAP* player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL, * final = NULL, * background = NULL;
@@ -247,8 +247,8 @@ int boxe(ALLEGRO_DISPLAY* display)
         if (acaoP == 1)
         {
             player = al_load_bitmap("jeb_p.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(player, 20, 123, 0);
+            //al_draw_bitmap(player, 20, 123, 0);
+            DrawBitmap(player, 20, 122);
 
 
         }
@@ -256,25 +256,24 @@ int boxe(ALLEGRO_DISPLAY* display)
         {
 
             player = al_load_bitmap("varios_p.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(player, 20, 122, 0);
+            //al_draw_bitmap(player, 20, 122, 0);
+            DrawBitmap(player, 20, 122);
 
         }
         else if (acaoP == 3)
         {
             player = al_load_bitmap("chute_p.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(player, 20, 122, 0);
+            //al_draw_bitmap(player, 20, 122, 0);
+            DrawBitmap(player, 20, 122);
 
         }
         else
         {
 
             player = al_load_bitmap("base_pn.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(player, 20, 122, 0);
+            //al_draw_bitmap(player, 20, 122, 0);
 
-
+            DrawBitmap(player, 20, 122);
         }
 
         //bot
@@ -282,32 +281,32 @@ int boxe(ALLEGRO_DISPLAY* display)
         if (acaoB == 1)
         {
             bot = al_load_bitmap("jeb_b.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(bot, 340, 122, 0);
+            //al_draw_bitmap(bot, 340, 122, 0);
+            DrawBitmap(bot, 340, 122);
 
         }
         else if (acaoB == 2)
         {
             bot = al_load_bitmap("varios_b.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(bot, 340, 122, 0);
+            // al_draw_bitmap(bot, 340, 122, 0);
 
+            DrawBitmap(bot, 340, 122);
 
         }
         else if (acaoB == 3)
         {
 
             bot = al_load_bitmap("chute_b.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(bot, 340, 122, 0);
+            //al_draw_bitmap(bot, 340, 122, 0);
+            DrawBitmap(bot, 340, 122);
 
         }
         else
         {
 
             bot = al_load_bitmap("base_b.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(bot, 340, 122, 0);
+            //al_draw_bitmap(bot, 340, 122, 0);
+            DrawBitmap(bot, 340, 122);
 
 
         }
@@ -318,28 +317,29 @@ int boxe(ALLEGRO_DISPLAY* display)
         if (PL == 3)
         {
             vida_p = al_load_bitmap("vida3.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_p, 120, 60, 0);
+            //al_draw_bitmap(vida_p, 120, 60, 0);
+            DrawBitmap(vida_p, 120, 60);
         }
         else if (PL == 2)
         {
 
             vida_p = al_load_bitmap("vida2.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_p, 120, 60, 0);
+            //al_draw_bitmap(vida_p, 120, 60, 0);
+            DrawBitmap(vida_p, 120, 60);
         }
         else if (PL == 1)
         {
 
             vida_p = al_load_bitmap("vida1.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_p, 120, 60, 0);
+            //al_draw_bitmap(vida_p, 120, 60, 0);
+            DrawBitmap(vida_p, 120, 60);
         }
 
         else {
 
 
             final = al_load_bitmap("botwin.png");
+            DrawBitmap(final, 0, 0);
             al_flip_display();
             al_rest(3.0);
             sair = true;
@@ -352,29 +352,31 @@ int boxe(ALLEGRO_DISPLAY* display)
         {
 
             vida_b = al_load_bitmap("vida3.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_b, 460, 60, 0);
+            //al_draw_bitmap(vida_b, 460, 60, 0);
+            DrawBitmap(vida_b, 460, 60);
 
         }
         else if (BL == 2)
         {
 
             vida_b = al_load_bitmap("vida2.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_b, 460, 60, 0);
+            //al_draw_bitmap(vida_b, 460, 60, 0);
+            DrawBitmap(vida_b, 460, 60);
 
         }
         else if (BL == 1)
         {
 
             vida_b = al_load_bitmap("vida1.png");
-            al_set_target_bitmap(al_get_backbuffer(display));
-            al_draw_bitmap(vida_b, 460, 60, 0);
+            //al_draw_bitmap(vida_b, 460, 60, 0);
+            DrawBitmap(vida_b, 460, 60);
         }
 
         else {
 
             final = al_load_bitmap("playerwin.jpg");
+            DrawBitmap(final, 0, 0);
+
             al_flip_display();
             al_rest(3.0);
             pontoBoxe++;
@@ -393,34 +395,31 @@ int boxe(ALLEGRO_DISPLAY* display)
 
 
         jeb = al_load_bitmap("jeb.png");
-        al_draw_bitmap(jeb, 80, 380, 0);
+        //al_draw_bitmap(jeb, 80, 380, 0);
+
+        DrawBitmap(jeb, 80, 380);
 
 
         gancho = al_load_bitmap("combo.png");
 
-        al_draw_bitmap(gancho, 480, 380, 0);
+        //al_draw_bitmap(gancho, 480, 380, 0);
+
+        DrawBitmap(gancho, 480, 380);
 
 
         chute = al_load_bitmap("chute.png");
 
-        al_draw_bitmap(chute, 280, 380, 0);
+        DrawBitmap(chute, 280, 380);
 
-        if (sair == true) {
-            al_draw_bitmap(final, 0, 0, 0);
-        }
+        //al_draw_bitmap(chute, 280, 380, 0);
 
+        //al_draw_bitmap(final, 0, 0, 0);
+
+        //DrawBitmap(final, 0, 0);
 
         // Atualiza a tela
         al_flip_display();
-        al_destroy_bitmap(jeb);
-        al_destroy_bitmap(chute);
-        al_destroy_bitmap(gancho);
-        al_destroy_bitmap(vida_p);
-        al_destroy_bitmap(vida_b);
-        al_destroy_bitmap(final);
-        al_destroy_bitmap(player);
-        al_destroy_bitmap(bot);
-        al_destroy_bitmap(background);
+
     }
 
 
@@ -432,6 +431,19 @@ int boxe(ALLEGRO_DISPLAY* display)
     al_destroy_event_queue(fila_eventos);
     al_destroy_audio_stream(musica);
     al_destroy_sample(sample);
+
+    /*
+     al_destroy_bitmap(jeb);
+    al_destroy_bitmap(chute);
+    al_destroy_bitmap(gancho);
+    al_destroy_bitmap(vida_p);
+    al_destroy_bitmap(vida_b);
+    al_destroy_bitmap(final);
+    al_destroy_bitmap(player);
+    al_destroy_bitmap(bot);
+    al_destroy_bitmap(background);
+    */
+
 
     return 0;
 }
