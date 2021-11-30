@@ -94,6 +94,9 @@ int main(int argc, char** argv)
 	ALLEGRO_FONT* font50 = NULL;
 	ALLEGRO_BITMAP* bgSheet = NULL;
 	ALLEGRO_BITMAP* npc = NULL;
+	//som 
+	ALLEGRO_SAMPLE* trilhaSonora = NULL;
+	ALLEGRO_SAMPLE_INSTANCE* inst_trilhaSonora = NULL;
 
 
 	//ALLEGRO INIT FUNCTIONS
@@ -120,8 +123,16 @@ int main(int argc, char** argv)
 	al_install_mouse();
 	al_install_audio();
 	al_init_acodec_addon();
+	al_reserve_samples(10);
 
 	//PROJECT INIT
+		//som
+	trilhaSonora = al_load_sample("trilhaSonora.ogg");
+	inst_trilhaSonora = al_create_sample_instance(trilhaSonora);
+	al_attach_sample_instance_to_mixer(inst_trilhaSonora, al_get_default_mixer());
+	al_set_sample_instance_playmode(inst_trilhaSonora, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_gain(inst_trilhaSonora, 0.1);
+
 
 	bgSheet = al_load_bitmap("background02.png"); //mapa  paleta de sprites para o mapa
 
@@ -464,7 +475,7 @@ int main(int argc, char** argv)
 
 				if (local_fala)//fala
 				{
-
+					al_play_sample_instance(inst_trilhaSonora);
 					if (contador > 0)
 					{	 //desenhar o local para as falas
 						al_draw_filled_rectangle(0, 0, width, height, al_map_rgba_f(0, 0, 0, 0.7));
@@ -490,6 +501,7 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 3 && npc_fala == 1)
 					{
+						al_stop_sample_instance(inst_trilhaSonora);
 						contador = 0;
 						inGame = true;
 						displayTenis = al_create_display(widthTenis, heightTenis);
@@ -526,6 +538,7 @@ int main(int argc, char** argv)
 					}
 
 					else if (contador == 3 && npc_fala == 2) {
+						al_stop_sample_instance(inst_trilhaSonora);
 						inGame = true;
 						contador = 0;
 						displaySkate = al_create_display(widthSkate, heightSkate);
@@ -556,6 +569,7 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 3 && npc_fala == 3)
 					{
+						al_stop_sample_instance(inst_trilhaSonora);
 						contador = 0;
 						inGame = true;
 						displaySurf = al_create_display(widthSurf, heightSurf);
@@ -629,6 +643,7 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 4 && npc_fala == 5)
 					{
+						al_stop_sample_instance(inst_trilhaSonora);
 						inGame = true;
 						displayBoxe = al_create_display(widthBoxe, heightBoxe);
 						boxe(displayBoxe);
