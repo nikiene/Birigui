@@ -51,6 +51,8 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 	updateObstaculoTimer = al_create_timer(0.035);
 	relogioJogo = al_create_timer(1.0);
 
+	al_set_window_title(displaySkate, "Skate birigui");
+
 	somSkate = al_load_sample("skate.wav");
 	somPulo = al_load_sample("pulo.wav");
 	musica = al_load_sample("cbj.wav");

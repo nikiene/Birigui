@@ -472,20 +472,21 @@ int main(int argc, char** argv)
 					}
 					//fala npc cima >>tenis
 					if (contador == 1 && npc_fala == 1) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Vejo que voce esta interessado em tenis. Ja que e assim vou te explicar as regras mas primeiro ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "voce pode me chamar de 'Pedrito' mas voce sabia o saque mais rapido ja registrado pela Associacao");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "dos Tenista Profissionais foi dado em 2012 pelo australiano Samuel Groth, com incriveis 263km/h ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "durante o torneio de Busan, na Coreia do Sul e ainda encaixou mais 2 saques de 253km/h e de 255km/h.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Pedrito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Vejo que voce esta interessado em tenis. Ja que e assim vou te explicar as regras, mas primeiro ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "voce pode me chamar de 'Pedrito'. Voce sabia que o saque mais rapido ja registrado pela Associacao");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "dos Tenistas Profissionais foi dado em 2012 pelo australiano Samuel Groth, com incriveis 263km/h ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "durante o torneio de Busan, na Coreia do Sul? E ainda encaixou mais 2 saques de 253km/h e de 255km/h!");
 
 					}
 					else if (contador == 2 && npc_fala == 1)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Pedrito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "E no jogo agora voce vai precisar marcar alguns set para vencer do seu adversario, voce tambem pode");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "se movimentar para esquerda e direita utilizando as teclas 'A'(esquerda) e 'D'(direita). Voce so ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "precisa chegar perto o suficiente para rebater e bom jogo.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Pedrito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Durante o jogo agora voce vai precisar marcar alguns set para vencer do seu adversario. Para se ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "movimentar para esquerda e direita utilize as teclas 'A'(esquerda) e 'D'(direita). Voce so ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "precisa chegar perto o suficiente para rebater. Quem fizer 3 pontos primeiro marca um set ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "e quem fizer 3 sets primeiro vence. Boa sorte! ");
 					}
 					else if (contador == 3 && npc_fala == 1)
 					{
@@ -507,21 +508,21 @@ int main(int argc, char** argv)
 
 					//fala npc esquerda>>skate
 					if (contador == 1 && npc_fala == 2) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Parece que voce quer andar de Skate, sabia que ele surgiu na California, Estados Unidos, nos anos 60.");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "Foi inventado por alguns surfistas, como uma brincadeira para um dia no qual nao havia ondas no mar. ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "Eles utilizaram rodinhas de patins. Ja em 1965 foram fabricados os primeiros skates e realizados os");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "primeiros campeonatos.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Nikito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Parece que voce quer andar de Skate! Sabia que ele surgiu na California, Estados Unidos, nos anos 60?");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "Foi inventado por alguns surfistas, como uma brincadeira para um dia no qual nao havia ondas no mar, ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "sendo assim eles utilizaram rodinhas de patins. So em 1965 foram fabricados os primeiros skates e");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "realizados os primeiros campeonatos.");
 						
 					}
 
 					else if (contador == 2 && npc_fala == 2)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora como jogar, para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita  ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "e a tecla 'W', seta pra cima ou espaco para pulas e se quiser sair do minigame so pressionar a tecla 'esc'.");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "ou 'x' No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "que nao pode ser pulado por cima, voce precisa sobreviver por 1 min para ganhar, boa sorte.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Agora como jogar: para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "A tecla 'W', a seta pra cima ou o espaco te fazem pular. E se quiser sair do minigame e so pressionar a tecla 'esc'.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "ou clicar no 'x'. No minigame voce vai precisar desviar de 2 tipos de obstaculos: o buraco que pode ser pulado, ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "e o cone que nao pode ser pulado por cima. Voce precisa sobreviver por 1 min para ganhar, boa sorte!");
 					}
 
 					else if (contador == 3 && npc_fala == 2) {
@@ -540,18 +541,18 @@ int main(int argc, char** argv)
 
 					//fala npc direita>>surf
 					if (contador == 1 && npc_fala == 3) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Parece que temos um desafiante, pode me chamar de Talonito, sabia que o surf e conhecido como o ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'esporte dos Deuse'. Na Polinesia, somente os reis podiam pratica-lo em pe na prancha enquanto os ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "suditos deveriam ficar deitados por isso que nao se deve subestimar o surf.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Talonito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Temos um desafiante aqui! Pode me chamar de Talonito. Sabia que o surf e conhecido como o ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "'esporte dos Deuses'? Na Polinesia somente os reis podiam pratica-lo em pe na prancha enquanto os ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "suditos deveriam ficar deitados. Por isso que nao se deve subestimar o surf!");
 
 					}
 					else if (contador == 2 && npc_fala == 3)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Talonito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora, para vencer esse desafio voce precisa coletar 5 medalhas, voce pode se movimentar utilizando ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "as teclas 'W,S,D,A' para ir pra cima, baixo, direita e esquerda, boa sorte.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Talonito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Agora, para vencer esse desafio voce precisa coletar 5 medalhas. Voce pode se movimentar utilizando ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "as teclas 'W,S,D,A' para ir pra cima, baixo, direita e esquerda. Boa sorte!");
 					}
 					else if (contador == 3 && npc_fala == 3)
 					{
@@ -573,27 +574,27 @@ int main(int argc, char** argv)
 
 					//fala npc meio
 					if (contador == 1 && npc_fala == 4) {
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Para andar pressione as teclas 'w,s,a,d', do teclado e para interagir com os npc clique na tecla");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "'z'. Oi, voce pode me chamar de 'Shodito', e irei te falar onde estao os lugares para voce jogar");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e tambem vou falar sobre umas curiosidades sobre as olimpiadas que pode te interessar eu acho.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530 , ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Para andar pressione as teclas 'w,s,a,d' e para interagir com os npcs pressione a tecla 'z'");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "Oi, voce pode me chamar de 'Shodito', e irei te falar onde estao os lugares para voce jogar");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "e tambem vou falar sobre umas curiosidades das olimpiadas que pode te interessar, eu acho.");
 
 					}
 					else if (contador == 2 && npc_fala == 4)
 
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Voce sabia que os JOGOS Olimpicos se originaram na Grecia Antiga numa cidade de Olimpiaonde tiveram ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "um forte vinculo religioso e erm dedicados a Zeus(Deus dos deuses dentro da mitologia grega)");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e que as argolas na bandeira das olimpiadas representa os 5 continentes habitados no mundo.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Voce sabia que os JOGOS Olimpicos se originaram na Grecia Antiga na cidade de Olimpia onde tiveram ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "um forte vinculo religioso e eram dedicados a Zeus(Deus dos deuses dentro da mitologia grega)?");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "As argolas na bandeira das olimpiadas representam os 5 continentes habitados no mundo.");
 					}
 					else if (contador == 3 && npc_fala == 4)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Shodito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora vou falar onde voce pode jogar, falando com o cara la em cima voce pode joga um ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "pouco de tenis mas se quiser pode jogar quantas vezes quiser indo pela direita voce ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "pode surfar falando com a passoa, na direcao de baixo pode praticar um boxe e na esquerda ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "pode andar de skate.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Shodito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Agora vou falar onde voce pode jogar, falando com o cara la de cima voce pode jogar um ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "pouco de tenis, mas se quiser pode jogar quantas vezes quiser. Indo pela direita voce ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "pode surfar falando com o Talonito. Na direcao de baixo pode praticar um boxe com o ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "Branquito e na esquerda pode andar de skate com o Nikito.");
 
 					}
 					else if (contador == 4 && npc_fala == 4)
@@ -603,25 +604,27 @@ int main(int argc, char** argv)
 					//fala npc comeco // baixo>>>boxe
 					if (contador == 1 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Que tal tentar jogar uma partida de Boxe, pode me chamar de Branquito, sabia que ele era ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "popular na Inglaterra nos seculos XVIII e XIX, as lutas eram feitas com as maos descobertas ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "e muito brutais e ele so foi reformado em 1867 com as Regras de Quensberry, que previam rounds ");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 710, NULL, "de tres minutos e o uso de luvas, so entraram em vigor em 1872.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Que tal tentar jogar uma partida de Boxe? Pode me chamar de Branquito! Voce sabia que ele era ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "popular na Inglaterra nos seculos XVIII e XIX e que as lutas eram feitas com as maos descobertas? ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "Ele so foi reformado em 1867 com as Regras de Quensberry, que previam rounds de tres minutos.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "E o uso de luvas so entraram em vigor em 1872.");
 					}
 					else if (contador == 2 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, o jogo e baseado em prever a habilidade do inimigo, voce");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "tem 3 opcoes de habilidade, sendo elas 'jeb', 'chute' e 'combo' cada um tem uma certa vantagem ");//continuar com a fala depois
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "sobre a outra, para nocautear o inimigo, tera que acertar 5 golpes nele.");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "Deixa eu te explicar como funcionam as regras aqui: o jogo e baseado em prever a habilidade do inimigo, voce");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "tem 3 opcoes de habilidade, sendo elas 'jeb', 'chute' e 'combo'. Cada um tem uma certa vantagem ");//continuar com a fala depois
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "sobre a outra. Para nocautear o inimigo, tera que acertar 3 golpes nele.");
 
 					}
 					else if (contador == 3 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "a ordem de vantagens e:");
-						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "JEB > CHUTE > COMBO > JEB ");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 530, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 580, NULL, "A ordem de vantagens e:");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 600, NULL, "JEB > CHUTE");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 620, NULL, "CHUTE > COMBO");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 640, NULL, "COMBO > JEB ");
 
 					}
 					else if (contador == 4 && npc_fala == 5)
