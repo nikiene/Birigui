@@ -1,5 +1,5 @@
- int height = 800;
- int width = 800;
+ int height = 768;
+ int width = 1024;
 
  int numeroObstaculos = 10;
 
@@ -18,5 +18,4 @@
  int heightBoxe = 480;
  int widthBoxe = 640;
 
- int PL = 3, BL = 3;
  int acaoP = 0, acaoB = 0;

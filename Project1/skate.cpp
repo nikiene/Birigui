@@ -20,6 +20,8 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 	bool done = false;
 	bool redraw = true;
 	const int FPS = 60;
+	int segundos = 0;
+	int minutos = 0;
 
 	Jogador jogador;
 	Obstaculo obstaculos[numeroObstaculosSkate];
@@ -81,7 +83,6 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 	al_start_timer(obstaculoTimer);
 	al_start_timer(updateObstaculoTimer);
 	al_start_timer(relogioJogo);
-
 	while (!done) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
@@ -92,7 +93,6 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 			PlaySound(musica);
 
 		}
-
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
 			UpdateParallax(BG);
 			UpdateParallax(MG);
@@ -159,7 +159,7 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 				al_stop_samples();
 				al_flush_event_queue(event_queue);
 				al_clear_to_color(al_map_rgb(186, 0, 0));
-				DrawText(jogador);
+				DrawText(jogador, segundos, minutos);
 				al_flip_display();
 				al_rest(5);
 				done = true;
@@ -187,7 +187,7 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 				jogador.status = MORTO;
 				al_flush_event_queue(event_queue);
 				al_clear_to_color(al_map_rgb(119, 198, 110));
-				DrawText(jogador);
+				DrawText(jogador, segundos, minutos);
 				al_flip_display();
 				al_rest(5.5);
 				done = true;
@@ -283,7 +283,7 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 			DrawParallax(FG1);
 			DrawParallax(FG2);
 
-			DrawText(jogador);
+			DrawText(jogador, segundos, minutos);
 
 			DrawPlantas(plantas, numeroPlantas);
 
@@ -291,14 +291,13 @@ int skate(ALLEGRO_DISPLAY* displaySkate) {
 			DrawJogador(jogador);
 			DrawPassedObstaculo(obstaculos, numeroObstaculos);
 
-
-
-
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
 
 	}
+
+	aux = false;
 
 	al_destroy_bitmap(bgImage);
 	al_destroy_bitmap(mgImage);

@@ -3,6 +3,9 @@
 #include <allegro5\allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+
 #include <stdio.h>
 #include "constantes.h"
 #include "desenho.h"
@@ -179,7 +182,7 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 }
 
 
-const char* combat(int acaoP, int acaoB) {
+const char* combat(int acaoP, int acaoB, int& PL, int& BL) {
 	if (acaoP == 1 && acaoB == 1) {
 		return "os golpes se encontram, mas não machucam nenhum dos lutadores!\n";
 	}
@@ -216,12 +219,73 @@ const char* combat(int acaoP, int acaoB) {
 	return "error";
 };
 
-int game(void) {
+int game(int PL, int BL) {
 	printf("\n \n-- BOXE BIRIGUI --  \n Vida P1: %d \n Vida P2: %d", PL, BL);
 	printf("\nFaça uma ação\n 1 - Jeb\n 2 - gancho\n 3 - chute\n ação: ");
 	scanf_s("%d", &acaoP);
 	acaoB = rand() % 3 + 1;
 	printf("o jogador 2 usou a acao %d\n \n", acaoB);
-	printf("%s", combat(acaoP, acaoB));
+	printf("%s", combat(acaoP, acaoB, PL, BL));
 	return 0;
+}
+
+void personagemMoveCima(Personagem& personagem) {
+	personagem.curFrame = 1;
+
+	personagem.posY -= personagem.velocidade;
+
+	if (personagem.posY < heightSurf / 3)
+		personagem.posY = heightSurf / 3;
+}
+void personagemMoveBaixo(Personagem& personagem) {
+	personagem.curFrame = 8;
+
+	personagem.posY += personagem.velocidade;
+
+	if (personagem.posY + 30 > heightSurf)
+		personagem.posY = heightSurf - 30;
+}
+void personagemMoveEsquerda(Personagem& personagem) {
+	personagem.curFrame = 1;
+
+	personagem.posX -= personagem.velocidade;
+
+	if (personagem.posX < 0)
+		personagem.posX = 0;
+}
+void personagemMoveDireira(Personagem& personagem) {
+	personagem.curFrame = 0;
+
+	personagem.posX += personagem.velocidade;
+
+	if (personagem.posX + 30 > widthSurf)
+		personagem.posX = widthSurf - 30;
+}
+
+void moveObstaculos(Obstaculos obstaculos[], int quantidade) {
+	for (int i = 0; i < quantidade; i++) {
+		if (obstaculos[i].ativo) {
+			obstaculos[i].posX -= obstaculos[i].velocidade;
+
+			if (obstaculos[i].posX < 0)
+				obstaculos[i].ativo = false;
+		}
+	}
+}
+
+// Colis�o
+void colidirObstaculos(Obstaculos obstaculos[], int quantidade, Personagem& personagem, ALLEGRO_SAMPLE_INSTANCE* insMedalhas) {
+	for (int i = 0; i < quantidade; i++) {
+		if (obstaculos[i].ativo) {
+			if (personagem.posX + personagem.bordaX > obstaculos[i].posX - obstaculos[i].bordaX &&
+				personagem.posY + personagem.bordaY > obstaculos[i].posY - obstaculos[i].bordaY &&
+				personagem.posX < obstaculos[i].posX + obstaculos[i].bordaX &&
+				personagem.posY < obstaculos[i].posY + obstaculos[i].bordaY) {
+
+				al_play_sample_instance(insMedalhas);
+				obstaculos[i].ativo = false;
+				personagem.vida--;
+			}
+		}
+	}
 }

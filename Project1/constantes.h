@@ -19,5 +19,4 @@ extern int widthSkate;
 extern int heightBoxe;
 extern int widthBoxe;
 
-extern int PL, BL;
 extern int acaoP, acaoB;

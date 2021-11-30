@@ -45,10 +45,21 @@ enum POSICOES {
 	DIREITA
 };
 
+enum KEYS {
+	DOWN,
+	LEFT,
+	RIGHT,
+	UP,
+	SPACE,
+	Z,
+	ENTER
+};
+
 enum OBSTACULOS {
 	CONE,
 	CORRIMAO
 };
+
 
 struct Jogador {
 	int ID;
@@ -85,15 +96,6 @@ struct Obstaculo {
 	float velocidade;
 
 	ALLEGRO_BITMAP* sprite;
-};
-
-enum KEYS {
-	DOWN,
-	LEFT,
-	RIGHT,
-	UP,
-	SPACE,
-	Z
 };
 
 struct personagem {
@@ -169,3 +171,47 @@ struct Parallax {
 
 	ALLEGRO_BITMAP* sprite;
 };
+
+struct Personagem {
+	int ID;
+	int posX;
+	int posY;
+	int vida;
+	int velocidade;
+	int bordaX;
+	int bordaY;
+	int pontos;
+
+	int maxFrame;
+	int curFrame;
+	int frameCount;
+	int frameDelay;
+	int frameLargura;
+	int frameAltura;
+	int coluna;
+	int linha;
+	int direcao;
+	ALLEGRO_BITMAP* imagemPersonagem;
+};
+
+struct Obstaculos {
+	int ID;
+	int posX;
+	int posY;
+	int velocidade;
+	int bordaX;
+	int bordaY;
+	bool ativo;
+
+	int maxFrame;
+	int curFrame;
+	int frameCount;
+	int frameDelay;
+	int frameLargura;
+	int frameAltura;
+	int coluna;
+	int linha;
+	int direcao;
+	ALLEGRO_BITMAP* imagemObstaculos;
+};
+

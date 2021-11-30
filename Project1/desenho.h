@@ -20,7 +20,7 @@ extern void DrawPassedObstaculo(Obstaculo obstaculo[], int size);
 
 extern void DrawBackgorund();
 
-extern void DrawText(Jogador& jogador);
+extern void DrawText(Jogador& jogador, int segundos, int minutos);
 
 extern void DrawPlantas(Plantas plantas[], int size);
 
@@ -30,3 +30,10 @@ extern void PlaySound(ALLEGRO_SAMPLE* sample);
 
 extern void PlaySoundBaixo(ALLEGRO_SAMPLE* sample);
 
+void initObstaculos(Obstaculos obstaculos[], int quantidade, ALLEGRO_BITMAP* imagemObstaculos);	
+
+void liberaObstaculos(Obstaculos obstaculos[], int quantidade);
+
+void desenhaPersonagem(Personagem& personagem);
+
+void desenhaObstaculos(Obstaculos obstaculos[], int quantidade);

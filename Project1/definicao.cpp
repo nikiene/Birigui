@@ -4,8 +4,6 @@
 #include <time.h>
 #include <stdio.h>
 
-int segundos = 0;
-int minutos = 0;
 int imagemJogador = 0;
 int skate = 0;
 bool aux = false;
@@ -284,4 +282,41 @@ void UpdateParallax(Parallax& parallax) {
 	parallax.x += parallax.velx * parallax.dirx;
 	if (parallax.x + width <= 0)
 		parallax.x = 0;
+}
+
+void initPersonagem(Personagem& personagem, ALLEGRO_BITMAP* imagemPersonagem) {
+	personagem.ID = JOGADOR;
+	personagem.posX = 100;
+	personagem.posY = (heightSurf / 2) + (heightSurf / 4);
+	personagem.bordaX = 60;
+	personagem.bordaY = 100;
+	personagem.velocidade = 7;
+	personagem.vida = 5;
+	personagem.pontos = 0;
+
+	personagem.maxFrame = 10;
+	personagem.curFrame = 0;
+	personagem.frameCount = 0;
+	personagem.frameDelay = 50;
+	personagem.frameLargura = 97;
+	personagem.frameAltura = 112;
+	personagem.coluna = 9;
+	personagem.direcao = 1;
+	personagem.imagemPersonagem = imagemPersonagem;
+}
+
+void initObstaculos(Obstaculos obstaculos[], int quantidade, ALLEGRO_BITMAP* imagemObstaculos) {
+	for (int i = 0; i < quantidade; i++) {
+		obstaculos[i].ID = OBSTACULOS;
+		obstaculos[i].velocidade = 20;
+		obstaculos[i].bordaX = 8;
+		obstaculos[i].bordaY = 8;
+		obstaculos[i].ativo = true;
+
+		obstaculos[i].maxFrame = 9;
+		obstaculos[i].curFrame = 0;
+		obstaculos[i].frameLargura = 41;
+		obstaculos[i].frameAltura = 65;
+		obstaculos[i].imagemObstaculos = imagemObstaculos;
+	}
 }

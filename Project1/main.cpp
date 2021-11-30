@@ -138,7 +138,7 @@ int main(int argc, char** argv)
 	ball1.w = al_get_bitmap_width(ball1.image);
 	ball1.h = al_get_bitmap_height(ball1.image);
 
-	ball1.x = width / 2;
+	ball1.x = width / 2 - 80;
 	ball1.y = ((height * 4) / 5) - 190;
 
 	ball2.w = 75;
@@ -456,6 +456,10 @@ int main(int argc, char** argv)
 						inGame = false;
 					}
 
+					else if (contador > 3 && npc_fala == 1) {
+						contador = 0;
+					}
+
 
 
 					//fala npc esquerda>>skate
@@ -479,12 +483,14 @@ int main(int argc, char** argv)
 
 					else if (contador == 3 && npc_fala == 2) {
 						inGame = true;
+						contador = 0;
 						displaySkate = al_create_display(widthSkate, heightSkate);
 						skate(displaySkate);
 						al_set_target_backbuffer(display);
+						inGame = false;	
+					}
+					else if (contador > 3 && npc_fala == 2) {
 						contador = 0;
-						inGame = false;
-						
 					}
 
 					//fala npc direita>>surf
@@ -511,6 +517,10 @@ int main(int argc, char** argv)
 						al_set_target_backbuffer(display);
 						inGame = false;
 						
+					}
+
+					else if (contador > 3 && npc_fala == 3) {
+						contador = 0;
 					}
 
 
@@ -575,6 +585,10 @@ int main(int argc, char** argv)
 						boxe(displayBoxe);
 						contador = 0;
 						al_set_target_backbuffer(display);
+						inGame = false;
+					}
+					else if(contador > 4 && npc_fala == 5){
+						contador = 0;
 					}
 				}
 

@@ -23,6 +23,7 @@ int boxe(ALLEGRO_DISPLAY* display)
     ALLEGRO_AUDIO_STREAM* musica = NULL;
     ALLEGRO_BITMAP* background;
     ALLEGRO_SAMPLE* sample = NULL;
+    int PL = 3, BL = 3;
 
     bool sair = false;
     if (!al_init())
@@ -198,7 +199,7 @@ int boxe(ALLEGRO_DISPLAY* display)
                     al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                     printf_s("JEB-VERMELHO, %d, %d\n", acaoP, acaoB);
-                    printf_s("%s", combat(acaoP, acaoB));
+                    printf_s("%s", combat(acaoP, acaoB, PL, BL));
                     printf_s("player: %d, bot %d\n", PL, BL);
                     endgame(BL, PL);
 
@@ -215,7 +216,7 @@ int boxe(ALLEGRO_DISPLAY* display)
                     al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                     printf_s("CHUTE-VERDE, %d, %d\n", acaoP, acaoB);
-                    printf_s("%s", combat(acaoP, acaoB));
+                    printf_s("%s", combat(acaoP, acaoB, PL, BL));
                     printf_s("player: %d,bot %d\n", PL, BL);
                     endgame(BL, PL);
                 }
@@ -231,7 +232,7 @@ int boxe(ALLEGRO_DISPLAY* display)
                     al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 
                     printf_s("GANCHO-AZUL, %d, %d\n", acaoP, acaoB);
-                    printf_s("%s\n", combat(acaoP, acaoB));
+                    printf_s("%s\n", combat(acaoP, acaoB, PL, BL));
                     printf_s("player: %d,bot %d\n", PL, BL);
                     endgame(BL, PL);
 

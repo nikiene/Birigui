@@ -89,7 +89,7 @@ void DrawBackgorund() {
 	al_destroy_bitmap(chao);
 }
 
-void DrawText(Jogador& jogador) {
+void DrawText(Jogador& jogador, int segundos, int minutos) {
 
 	ALLEGRO_FONT* font = al_load_font("fontePlacar.ttf", 35, 0);
 
@@ -148,4 +148,32 @@ void DrawParallax(Parallax& parallax) {
 
 	if (parallax.x + widthSkate < widthSkate)
 		al_draw_bitmap(parallax.sprite, parallax.x + widthSkate, parallax.y, 0);
+}
+
+void desenhaPersonagem(Personagem& personagem) {
+	//al_draw_filled_rectangle(personagem.posX, personagem.posY, personagem.posX + 60, personagem.posY + 130, al_map_rgb(255, 0, 0));
+	al_draw_tinted_scaled_rotated_bitmap_region(personagem.imagemPersonagem, personagem.curFrame * personagem.frameLargura, 0, personagem.frameLargura, personagem.frameAltura, al_map_rgb(255, 255, 255), 0, 0, (personagem.posX - personagem.frameLargura + 30), (personagem.posY - personagem.frameAltura + 30), 1.8, 1.8, 0, 0);
+}
+
+void liberaObstaculos(Obstaculos obstaculos[], int quantidade) {
+	for (int i = 0; i < quantidade; i++) {
+		if (!obstaculos[i].ativo) {
+			if (rand() % 500 == 0) {
+				obstaculos[i].posX = widthSurf;
+				obstaculos[i].posY = rand() % heightSurf + (heightSurf / 3) + 50;
+				obstaculos[i].ativo = true;
+				obstaculos[i].curFrame = rand() % obstaculos[i].maxFrame;
+				break;
+			}
+		}
+	}
+}
+
+void desenhaObstaculos(Obstaculos obstaculos[], int quantidade) {
+	for (int i = 0; i < quantidade; i++) {
+		if (obstaculos[i].ativo) {
+			//al_draw_filled_circle(obstaculos[i].posX, obstaculos[i].posY, 10, al_map_rgb(255, 0, 0));
+			al_draw_bitmap_region(obstaculos[i].imagemObstaculos, obstaculos[i].curFrame * obstaculos[i].frameLargura, 0, obstaculos[i].frameLargura, obstaculos[i].frameAltura, obstaculos[i].posX - 20, obstaculos[i].posY - 30, 0);
+		}
+	}
 }

@@ -36,6 +36,18 @@ void MakeJogadorJump(Jogador& jogador);
 
 int Collision(Obstaculo obstaculo[], Jogador& jogador);
 
-const char* combat(int acaoP, int acaoB);
+const char* combat(int acaoP, int acaoB, int& PL, int& BL);
 
-int game(void);
+int game(int PL, int BL);
+
+void colidirObstaculos(Obstaculos obstaculos[], int quantidade, Personagem& personagem, ALLEGRO_SAMPLE_INSTANCE* insMedalhas);
+
+void moveObstaculos(Obstaculos obstaculos[], int quantidade);
+
+void personagemMoveCima(Personagem& personagem);
+
+void personagemMoveBaixo(Personagem& personagem);
+
+void personagemMoveEsquerda(Personagem& personagem);
+
+void personagemMoveDireira(Personagem& personagem);
