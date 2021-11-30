@@ -20,4 +20,4 @@
 
  int acaoP = 0, acaoB = 0;
 
- int pontoSkate = 1, pontoBoxe = 1, pontoTenis = 1, pontoSurf = 0;
+ int pontoSkate = 0, pontoBoxe = 0, pontoTenis = 0, pontoSurf = 0;

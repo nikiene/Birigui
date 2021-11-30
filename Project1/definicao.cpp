@@ -9,8 +9,8 @@ int skate = 0;
 bool aux = false;
 
 void initBot(Player& b) {
-	b.x = (widthSkate / 2) - 50;
-	b.y = heightSkate / 8;
+	b.x = (widthTenis / 2) - 50;
+	b.y = heightTenis / 8;
 	b.width = 60;
 	b.height = 25;
 
@@ -19,8 +19,8 @@ void initBot(Player& b) {
 
 void initPlayer(Player& p) {
 	p.id = JOGADOR;
-	p.x = (widthSkate / 2) - 50;
-	p.y = (3 * heightSkate) / 4;
+	p.x = (widthTenis / 2) - 50;
+	p.y = (3 * heightTenis) / 4;
 	p.width = 60;
 	p.height = 25;
 
@@ -28,8 +28,8 @@ void initPlayer(Player& p) {
 }
 
 void initBall(Ball& b) {
-	b.x = widthSkate / 2;
-	b.y = heightSkate / 2;
+	b.x = widthTenis / 2;
+	b.y = heightTenis / 2;
 	b.width = 20;
 	b.height = 20;
 	b.raio = 5.5;

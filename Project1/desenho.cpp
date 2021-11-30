@@ -11,7 +11,7 @@
 
 
 void drawPlayer(Player& p) {
-	al_draw_bitmap(p.sprite, p.x, p.y, ALLEGRO_FLIP_HORIZONTAL);
+	al_draw_bitmap(p.sprite, p.x, p.y, 0);
 }
 
 void drawBall(Ball& b) {
@@ -19,10 +19,10 @@ void drawBall(Ball& b) {
 }
 
 void drawPlacar(ALLEGRO_FONT* fontHeader, ALLEGRO_FONT* fontBody) {
-	al_draw_text(fontHeader, al_map_rgb(255, 255, 255), 2 * widthSkate / 10 + 5, 4 * heightSkate / 9, ALLEGRO_ALIGN_CENTER, "Pts");
-	al_draw_textf(fontBody, al_map_rgb(255, 255, 255), 2 * widthSkate / 10 + 5, 4 * heightSkate / 9 + 20, ALLEGRO_ALIGN_CENTER, "P %d - %d B", pontosPlayer, pontosBot);
-	al_draw_text(fontHeader, al_map_rgb(255, 255, 255), (8 * widthSkate) / 10 - 5, (4 * heightSkate / 9), ALLEGRO_ALIGN_CENTER, "Sets ");
-	al_draw_textf(fontBody, al_map_rgb(255, 255, 255), (8 * widthSkate) / 10 - 5, (4 * heightSkate / 9) + 20, ALLEGRO_ALIGN_CENTER, "%d - %d ", setsPlayer, setsBot);
+	al_draw_text(fontHeader, al_map_rgb(255, 255, 255), 2 * widthTenis / 10 + 5, 4 * heightTenis / 9, ALLEGRO_ALIGN_CENTER, "Pts");
+	al_draw_textf(fontBody, al_map_rgb(255, 255, 255), 2 * widthTenis / 10 + 5, 4 * heightTenis / 9 + 20, ALLEGRO_ALIGN_CENTER, "P %d - %d B", pontosPlayer, pontosBot);
+	al_draw_text(fontHeader, al_map_rgb(255, 255, 255), (8 * widthTenis) / 10 - 5, (4 * heightTenis / 9), ALLEGRO_ALIGN_CENTER, "Sets ");
+	al_draw_textf(fontBody, al_map_rgb(255, 255, 255), (8 * widthTenis) / 10 - 5, (4 * heightTenis / 9) + 20, ALLEGRO_ALIGN_CENTER, "%d - %d ", setsPlayer, setsBot);
 }
 
 void DrawJogador(Jogador& jogador) {

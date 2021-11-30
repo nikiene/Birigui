@@ -120,8 +120,8 @@ int colide(Ball& ball, Player& player, Player& bot, bool& colidiuAntes) {
 			}
 		}
 		aceleracao = 1.1;
-		ball.x = width / 2;
-		ball.y = height / 2;
+		ball.x = widthTenis / 2;
+		ball.y = heightTenis / 2;
 		return 3;
 	}
 

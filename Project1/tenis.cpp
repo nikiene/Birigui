@@ -60,12 +60,6 @@ int tenis(ALLEGRO_DISPLAY* display) {
 
 	somBatida = al_load_sample("batida_sample.wav");
 
-	//Desenhando player e bot
-	drawPlayer(player);
-	drawPlayer(bot);
-	drawBall(ball);
-	drawPlacar(fontBody, fontHeader);
-	al_flip_display();
 
 	//Registrando as origens de evento
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -152,13 +146,13 @@ int tenis(ALLEGRO_DISPLAY* display) {
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_A) {
-				if (player.x > (width / 8)) {
+				if (player.x > (widthTenis / 8) + 20) {
 					movementLeft(player);
 				}
 			}
 
 			if (ev.keyboard.keycode == ALLEGRO_KEY_D) {
-				if (player.x + player.width < (7 * width) / 8) {
+				if (player.x + player.width < (7 * widthTenis) / 8 - 40) {
 					movementRight(player);
 				}
 			}
@@ -188,14 +182,14 @@ int tenis(ALLEGRO_DISPLAY* display) {
 	}
 
 
-	if (setsPlayer == 1) {
+	if (setsPlayer == 3) {
 		al_clear_to_color(al_map_rgb(0, 255, 0));
-		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthSkate / 2 - widthSkate / 4, heightSkate / 2, 0, "Voce ganhou!");
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthTenis / 2, heightTenis / 2, ALLEGRO_ALIGN_CENTER, "Voce ganhou!");
 		pontoTenis++;
 	}
 	else {
 		al_clear_to_color(al_map_rgb(255, 0, 0));
-		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthSkate / 2 - widthSkate / 4, heightSkate / 2, 0, "Voce perdeu!");
+		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), widthTenis / 2, heightTenis / 2, ALLEGRO_ALIGN_CENTER, "Voce perdeu!");
 	}
 	al_flip_display();
 
