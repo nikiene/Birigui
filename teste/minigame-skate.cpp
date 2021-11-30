@@ -70,6 +70,11 @@ void CreatePlantas(Plantas plantas[], int size);
 void DrawPlantas(Plantas plantas[], int size);
 void UpdatePlantas(Plantas plantas[], int size);
 
+void InitParallax(Parallax& parallax, float x, float y, float velx, float vely, int dirX, int dirY, ALLEGRO_BITMAP* image);
+void UpdateParallax(Parallax& parallax);
+void DrawParallax(Parallax& parallax);
+
+
 int Collision(Obstaculo obstaculo[], Jogador& jogador);
 
 int main(void) {
@@ -80,6 +85,10 @@ int main(void) {
 	Jogador jogador;
 	Obstaculo obstaculos[numeroObstaculos];
 	Plantas plantas[numeroPlantas];
+	Parallax BG;
+	Parallax MG;
+	Parallax FG1;
+	Parallax FG2;
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
@@ -91,6 +100,10 @@ int main(void) {
 	ALLEGRO_SAMPLE* somSkate = NULL;
 	ALLEGRO_SAMPLE* musica = NULL;
 	ALLEGRO_SAMPLE* somPulo = NULL;
+
+	ALLEGRO_BITMAP* bgImage = NULL;
+	ALLEGRO_BITMAP* mgImage = NULL;
+	ALLEGRO_BITMAP* fgImage = NULL;
 
 	if (!al_init())
 		return -1;
@@ -118,6 +131,10 @@ int main(void) {
 	somPulo = al_load_sample("pulo.wav");
 	musica = al_load_sample("cbj.wav");
 
+	bgImage = al_load_bitmap("montanha.png");
+	mgImage = al_load_bitmap("nuvem2.png");
+	fgImage = al_load_bitmap("nuvem1.png");
+
 	al_reserve_samples(3);
 
 	srand(time(NULL));
@@ -125,6 +142,11 @@ int main(void) {
 	InitJogador(jogador);
 	InitPlantas(plantas, numeroPlantas);
 	InitObstaculo(obstaculos, numeroObstaculos);
+
+	InitParallax(BG, 0, 85, 0.25, 0, -1, 1, bgImage);
+	InitParallax(MG, 0, 10, 0.5, 0, -1, 1, mgImage);
+	InitParallax(FG1, 0, 50, 0.75, 0, -1, 1, fgImage);
+	InitParallax(FG2, 0, 90, 1, 0, -1, 1, fgImage);
 
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(gameTimer));
@@ -150,6 +172,10 @@ int main(void) {
 		}
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
+			UpdateParallax(BG);
+			UpdateParallax(MG);
+			UpdateParallax(FG1);
+			UpdateParallax(FG2);
 			redraw = true;
 
 			if (keys[UP]) {
@@ -329,6 +355,11 @@ int main(void) {
 
 			DrawBackgorund();
 
+			DrawParallax(BG);
+			DrawParallax(MG);
+			DrawParallax(FG1);
+			DrawParallax(FG2);
+
 			DrawText(jogador);
 
 			DrawPlantas(plantas, numeroPlantas);
@@ -338,11 +369,17 @@ int main(void) {
 			DrawPassedObstaculo(obstaculos, numeroObstaculos);
 
 
+
+
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 		}
 
 	}
+
+	al_destroy_bitmap(bgImage);
+	al_destroy_bitmap(mgImage);
+	al_destroy_bitmap(fgImage);
 
 	al_destroy_sample(somPulo);
 	al_destroy_sample(somSkate);
@@ -742,4 +779,27 @@ void UpdatePlantas(Plantas plantas[], int size) {
 			}
 		}
 	}
+}
+
+void InitParallax(Parallax& parallax, float x, float y, float velx, float vely, int dirX, int dirY, ALLEGRO_BITMAP* image) {
+	parallax.x = x;
+	parallax.y = y;
+	parallax.velx = velx;
+	parallax.vely = vely;
+	parallax.dirx = dirX;
+	parallax.diry = dirY;
+	parallax.sprite = image;
+}
+
+void UpdateParallax(Parallax& parallax) {
+	parallax.x += parallax.velx * parallax.dirx;
+	if (parallax.x + width <= 0)
+		parallax.x = 0;
+}
+
+void DrawParallax(Parallax& parallax) {
+	al_draw_bitmap(parallax.sprite, parallax.x, parallax.y, 0);
+
+	if (parallax.x + width < width)
+		al_draw_bitmap(parallax.sprite, parallax.x + width, parallax.y, 0);
 }
