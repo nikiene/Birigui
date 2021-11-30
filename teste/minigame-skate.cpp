@@ -16,6 +16,8 @@ const int height = 480;
 
 const int numeroObstaculos = 10;
 
+const int numeroPlantas = 250;
+
 bool pulo = false;
 
 int velocidadeMaxPulo = 16;
@@ -63,6 +65,11 @@ void CreateObstaculo(Obstaculo obstaculo[], int size);
 void UpdateObstaculo(Obstaculo obstaculo[], int size);
 void DrawPassedObstaculo(Obstaculo obstaculo[], int size);
 
+void InitPlantas(Plantas plantas[], int size);
+void CreatePlantas(Plantas plantas[], int size);
+void DrawPlantas(Plantas plantas[], int size);
+void UpdatePlantas(Plantas plantas[], int size);
+
 int Collision(Obstaculo obstaculo[], Jogador& jogador);
 
 int main(void) {
@@ -71,7 +78,8 @@ int main(void) {
 	const int FPS = 60;
 
 	Jogador jogador;
-	Obstaculo obstaculos[10];
+	Obstaculo obstaculos[numeroObstaculos];
+	Plantas plantas[numeroPlantas];
 
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
@@ -115,6 +123,7 @@ int main(void) {
 	srand(time(NULL));
 
 	InitJogador(jogador);
+	InitPlantas(plantas, numeroPlantas);
 	InitObstaculo(obstaculos, numeroObstaculos);
 
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -132,11 +141,12 @@ int main(void) {
 	while (!done) {
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
-		
+
 		if (aux == false)
 		{
 			aux = true;
 			PlaySound(musica);
+			
 		}
 
 		if (ev.type == ALLEGRO_EVENT_TIMER) {
@@ -165,27 +175,37 @@ int main(void) {
 		} if (ev.timer.source == obstaculoTimer) {
 
 			imagemJogador++;
+			CreatePlantas(plantas, numeroPlantas);
 
 			CreateObstaculo(obstaculos, numeroObstaculos);
 			if (rand() % 10 == 0) {
 				CreateObstaculo(obstaculos, numeroObstaculos);
+
 			}
 			if (rand() % 10 == 0) {
 				CreateObstaculo(obstaculos, numeroObstaculos);
 			}
 			if (rand() % 10 == 0) {
 				CreateObstaculo(obstaculos, numeroObstaculos);
+				CreatePlantas(plantas, numeroPlantas);
+
 			}
 			if (rand() % 10 == 0) {
 				CreateObstaculo(obstaculos, numeroObstaculos);
+
 			}
 			if (rand() % 10 == 0) {
 				CreateObstaculo(obstaculos, numeroObstaculos);
+
 			}
 			CreateObstaculo(obstaculos, numeroObstaculos);
+
+			
+
 
 		} if (ev.timer.source == updateObstaculoTimer) {
 			UpdateObstaculo(obstaculos, numeroObstaculos);
+			UpdatePlantas(plantas, numeroPlantas);
 			
 			if (Collision(obstaculos, jogador)) {
 				al_stop_samples();
@@ -197,7 +217,9 @@ int main(void) {
 				done = true;
 			}
 			
-		} if (ev.timer.source == relogioJogo) {
+		}  if (ev.timer.source == relogioJogo) {
+
+			CreatePlantas(plantas, numeroPlantas);
 
 			if (skate == 0) {
 				PlaySoundBaixo(somSkate);
@@ -305,17 +327,16 @@ int main(void) {
 		if (redraw && al_is_event_queue_empty(event_queue)) {
 			redraw = false;
 
-			al_draw_filled_rectangle(0, 160, 640, 480, al_map_rgb(0, 255, 0));
-			al_draw_line(280, 160, 106.5, 480, al_map_rgb(255, 0, 0), 2);
-			al_draw_line(390, 160, 547.5, 480, al_map_rgb(255, 0, 0), 2);
-
 			DrawBackgorund();
 
 			DrawText(jogador);
 
+			DrawPlantas(plantas, numeroPlantas);
+
 			DrawObstaculo(obstaculos, numeroObstaculos);
 			DrawJogador(jogador);
 			DrawPassedObstaculo(obstaculos, numeroObstaculos);
+
 
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0, 0, 0));
@@ -637,3 +658,88 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 	return 0;
 }
 
+void InitPlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		plantas[i].velocidade = 1.0;
+		plantas[i].status = MORTO;
+	}
+}
+
+void CreatePlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		if (plantas[i].status == MORTO) {
+			plantas[i].tipo = rand() % 2;
+			if (plantas[i].tipo == 1) {
+				plantas[i].y = 100;
+				plantas[i].tipoArvore = rand() % 2;
+				if (plantas[i].tipoArvore == 0){
+					plantas[i].y = 80;
+
+				}
+			}
+			plantas[i].edgeRate = 1;
+			plantas[i].edgeRate2 = 1;
+			plantas[i].y = 130;
+			plantas[i].ladoPista = rand() % 2;
+			switch (plantas[i].ladoPista) {
+			case 0:
+				plantas[i].x = (rand() % 100) + 80;
+				plantas[i].status = VIVO;
+				break;
+			case 1:
+				plantas[i].x = (rand() % 100) + 450;
+				plantas[i].status = VIVO;
+				break;
+			case 2:
+				plantas[i].status = MORTO;
+				break;
+			}
+			return;
+		}
+	}		
+
+
+}
+
+void DrawPlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		 if (plantas[i].status == VIVO && plantas[i].tipo == 1 && plantas[i].tipoArvore == 0) {
+			plantas[i].sprite = al_load_bitmap("arvore1.png");
+			al_draw_bitmap(plantas[i].sprite, plantas[i].x, plantas[i].y, ALLEGRO_ALIGN_CENTER);
+			al_destroy_bitmap(plantas[i].sprite);
+		} if (plantas[i].status == VIVO && plantas[i].tipo == 1 && plantas[i].tipoArvore == 1)  {
+			plantas[i].sprite = al_load_bitmap("arvore2.png");
+			al_draw_bitmap(plantas[i].sprite, plantas[i].x, plantas[i].y, ALLEGRO_ALIGN_CENTER);
+			al_destroy_bitmap(plantas[i].sprite);
+		} if (plantas[i].status == VIVO && plantas[i].tipo == 0) {
+			plantas[i].sprite = al_load_bitmap("arbusto.png");
+			al_draw_bitmap(plantas[i].sprite, plantas[i].x, plantas[i].y, ALLEGRO_ALIGN_CENTER);
+			al_destroy_bitmap(plantas[i].sprite);
+		}
+	}
+}
+
+void UpdatePlantas(Plantas plantas[], int size) {
+	for (int i = 0; i < size; i++) {
+		if (plantas[i].status == VIVO) {
+			plantas[i].y += plantas[i].velocidade;
+			if (plantas[i].ladoPista == 0) {
+				plantas[i].x -= plantas[i].edgeRate /2;
+				plantas[i].edgeRate += 0.1;
+			} else if (plantas[i].ladoPista == 1) {
+				plantas[i].x += plantas[i].edgeRate /2;
+				plantas[i].edgeRate += 0.1;
+			}
+			
+			plantas[i].velocidade += 0.1;
+			plantas[i].edgeRate += 0.5;
+			
+			if (plantas[i].y > height) {
+				plantas[i].velocidade = 2;
+				plantas[i].edgeRate = 1;
+				plantas[i].edgeRate2 = 1;
+				plantas[i].status = MORTO;
+			}
+		}
+	}
+}

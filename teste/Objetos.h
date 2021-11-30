@@ -57,3 +57,33 @@ struct Obstaculo {
 
 	ALLEGRO_BITMAP* sprite;
 };
+
+struct Plantas {
+	bool status;
+
+	int ladoPista;
+
+	int tipo;
+	int tipoArvore;
+
+	float x;
+	float y;
+
+	float edgeRate;
+	float edgeRate2;
+
+	float velocidade;
+
+	ALLEGRO_BITMAP* sprite;
+};
+
+struct Parallax {
+	float x;
+	float y;
+	float velx;
+	float vely;
+	int dirx;
+	int diry;
+
+	ALLEGRO_BITMAP* sprite;
+};
