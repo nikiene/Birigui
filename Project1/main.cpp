@@ -3,6 +3,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <stdio.h>
 #include "constantes.h"
 #include "desenho.h"
@@ -115,6 +117,8 @@ int main(int argc, char** argv)
 	al_init_ttf_addon();
 	al_init_primitives_addon();
 	al_install_mouse();
+	al_install_audio();
+	al_init_acodec_addon();
 
 	//PROJECT INIT
 
@@ -444,12 +448,11 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 3 && npc_fala == 1)
 					{
+						contador = 0;
 						inGame = true;
 						displayTenis = al_create_display(widthTenis, heightTenis);
 						tenis(displayTenis);
 						al_set_target_backbuffer(display);
-						contador = 0;
-						
 						inGame = false;
 					}
 
@@ -467,7 +470,7 @@ int main(int argc, char** argv)
 
 					else if (contador == 2 && npc_fala == 2)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Nikito");//continuar com a fala depois //feito
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Agora como jogar, para ir para esquerda e direita use as teclas 'A' e 'D' ou seta esquerda e direita  ");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "e a tecla 'W', seta pra cima ou espaco para pulas e se quiser sair do minigame so pressionar a tecla 'esc'.");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "No minigame voce vai presisar desviar dos 2 tipos de obstaculos o buraco que pode ser pulado e o cone ");
@@ -559,7 +562,7 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 2 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "Deixa eu te explicar como as regras aqui, o jogo é baseado em prever a habilidade do inimigo, voce");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "tem 3 opcoes de habilidade, sendo elas 'jeb', 'chute' e 'combo' cada um tem uma certa vantagem ");//continuar com a fala depois
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 690, NULL, "sobre a outra, para nocautear o inimigo, tera que acertar 5 golpes nele.");
@@ -567,18 +570,18 @@ int main(int argc, char** argv)
 					}
 					else if (contador == 3 && npc_fala == 5)
 					{
-						al_draw_text(font18, al_map_rgb(255, 255, 0), largura / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
+						al_draw_text(font18, al_map_rgb(255, 255, 0), width / 12, 630, ALLEGRO_ALIGN_CENTRE, "Branquito");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 650, NULL, "a ordem de vantagens é:");
 						al_draw_text(font18, al_map_rgb(255, 255, 0), 15, 670, NULL, "JEB > CHUTE > COMBO > JEB ");
 
 					}
 					else if (contador == 4 && npc_fala == 5)
 					{
-            inGame = true;
-						displayBoxe = al_create_display(width, height);
+						inGame = true;
+						displayBoxe = al_create_display(widthBoxe, heightBoxe);
 						boxe(displayBoxe);
-            al_set_target_backbuffer(display);
 						contador = 0;
+						al_set_target_backbuffer(display);
 					}
 				}
 

@@ -1,7 +1,12 @@
 ﻿#include <allegro5/allegro.h>
-#include <allegro5\allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
+#include <stdio.h>
+#include <iostream>
+#include <cstdlib>
+#include <time.h>
+#include <stdlib.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <stdio.h>
 #include "constantes.h"
 #include "desenho.h"
@@ -12,20 +17,87 @@
 #include "jogos.h"
 
 int boxe(ALLEGRO_DISPLAY* display) 
-{   //setando variaveis
+{
     ALLEGRO_EVENT_QUEUE* fila_eventos = NULL;
-    ALLEGRO_BITMAP* botao_sair = NULL, * player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL;
-    
-    int sair = 0;
-    int acaoP = 0, acaoB = 0;
+    ALLEGRO_BITMAP* player = 0, * bot = NULL, * jeb = NULL, * gancho = NULL, * chute = NULL, * vida_p = NULL, * vida_b = NULL, * final = NULL;
+    ALLEGRO_AUDIO_STREAM* musica = NULL;
+    ALLEGRO_BITMAP* background;
+    ALLEGRO_SAMPLE* sample = NULL;
 
-    // Configura o t�tulo da janela
+    bool sair = false;
+    if (!al_init())
+    {
+        fprintf(stderr, "Falha ao inicializar a Allegro.\n");
+        return -1;
+    }
+
+    al_init_image_addon();
+
+
+    if (!al_install_audio())
+    {
+        fprintf(stderr, "Falha ao inicializar áudio.\n");
+        return false;
+    }
+
+    if (!al_init_acodec_addon())
+    {
+        fprintf(stderr, "Falha ao inicializar codecs de áudio.\n");
+        return false;
+    }
+
+    if (!al_reserve_samples(1))
+    {
+        fprintf(stderr, "Falha ao alocar canais de áudio.\n");
+        return false;
+    }
+
+    musica = al_load_audio_stream("theme.ogg", 4, 1024);
+    if (!musica)
+    {
+        fprintf(stderr, "Falha ao carregar audio.\n");
+        al_destroy_event_queue(fila_eventos);
+        al_destroy_display(display);
+        al_destroy_sample(sample);
+        return false;
+    }
+
+    sample = al_load_sample("soco.wav");
+    if (!sample)
+    {
+        fprintf(stderr, "Falha ao carregar sample.\n");
+        al_destroy_display(display);
+        return false;
+    }
+
+
+    al_attach_audio_stream_to_mixer(musica, al_get_default_mixer());
+    al_set_audio_stream_playing(musica, true);
+
+    background = al_load_bitmap("background.jpg");
+    al_draw_bitmap(background, 0, 0, 0);
+
+
+    // Configura o título da display
     al_set_window_title(display, "Boxe birigui");
 
-    
-    al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT);
+    // Torna apto o uso de mouse na aplicação
+    if (!al_install_mouse())
+    {
+        fprintf(stderr, "Falha ao inicializar o mouse.\n");
+        al_destroy_display(display);
+        return -1;
+    }
 
-    // Alocamos o ret�ngulo central da tela
+    // Atribui o cursor padrão do sistema para ser usado
+    if (!al_set_system_mouse_cursor(display, ALLEGRO_SYSTEM_MOUSE_CURSOR_DEFAULT))
+    {
+        fprintf(stderr, "Falha ao atribuir ponteiro do mouse.\n");
+        al_destroy_display(display);
+        return -1;
+    }
+
+    // locando bitmaps
     player = al_create_bitmap(30, 150);
     if (!player)
     {
@@ -40,6 +112,15 @@ int boxe(ALLEGRO_DISPLAY* display)
         al_destroy_display(display);
         return -1;
     }
+
+    final = al_create_bitmap(640, 480);
+    if (!player)
+    {
+        fprintf(stderr, "Falha ao criar bitmap.\n");
+        al_destroy_display(display);
+        return -1;
+    }
+
     jeb = al_create_bitmap(100, 50);
     if (!jeb)
     {
@@ -77,18 +158,8 @@ int boxe(ALLEGRO_DISPLAY* display)
         return -1;
     }
 
-
-
-    // Alocamos o bot�o para fechar a aplica��o
+    // Alocamos o botão para fechar a aplicação
     //OLHA AQUI KRL
-    botao_sair = al_create_bitmap(100, 50);
-    if (!botao_sair)
-    {
-        fprintf(stderr, "Falha ao criar bot�o de sa�da.\n");
-        al_destroy_bitmap(player);
-        al_destroy_display(display);
-        return -1;
-    }
 
     fila_eventos = al_create_event_queue();
     if (!fila_eventos)
@@ -99,39 +170,23 @@ int boxe(ALLEGRO_DISPLAY* display)
     }
 
 
-    al_register_event_source(fila_eventos, al_get_mouse_event_source());
 
+
+    al_register_event_source(fila_eventos, al_get_mouse_event_source());
 
     int na_player = 0;
     while (!sair)
     {
-           ALLEGRO_EVENT evento;
+        // Verificamos se há eventos na fila
+        while (!al_is_event_queue_empty(fila_eventos))
+        {
+            ALLEGRO_EVENT evento;
             al_wait_for_event(fila_eventos, &evento);
 
 
-            if (evento.type == ALLEGRO_EVENT_KEY_DOWN) {
-                if (evento.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
-                    sair = true;
-            }
-
-            if (evento.type == ALLEGRO_EVENT_MOUSE_AXES)
+            if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
             {
-
-                if (evento.mouse.x >= width / 2 - al_get_bitmap_width(player) / 2 &&
-                    evento.mouse.x <= width / 2 + al_get_bitmap_width(player) / 2 &&
-                    evento.mouse.y >= height / 2 - al_get_bitmap_height(player) / 2 &&
-                    evento.mouse.y <= height / 2 + al_get_bitmap_height(player) / 2)
-                {
-                    na_player = 1;
-                }
-                else
-                {
-                    na_player = 0;
-                }
-            }
-            else if (evento.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
-            {
-                //A��O JEB vermelho
+                //AÇÃO JEB vermelho
                 if (evento.mouse.x >= 80 &&
                     evento.mouse.x <= 180 &&
                     evento.mouse.y >= 380 &&
@@ -140,15 +195,15 @@ int boxe(ALLEGRO_DISPLAY* display)
                 {
                     acaoP = 1;
                     acaoB = rand() % 3 + 1;
-                    al_clear_to_color(al_map_rgb(255, 255, 0));
+                    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                     printf_s("JEB-VERMELHO, %d, %d\n", acaoP, acaoB);
                     printf_s("%s", combat(acaoP, acaoB));
                     printf_s("player: %d, bot %d\n", PL, BL);
-                    if (endgame(BL, PL))
-                        sair = true;
+                    endgame(BL, PL);
 
                 }
-                //A��O CHUTE verde
+                //AÇÃO CHUTE verde
                 else if (evento.mouse.x >= 280 &&
                     evento.mouse.x <= 380 &&
                     evento.mouse.y >= 380 &&
@@ -157,15 +212,14 @@ int boxe(ALLEGRO_DISPLAY* display)
                 {
                     acaoP = 3;
                     acaoB = rand() % 3 + 1;
-                    al_set_target_bitmap(player);
-                    al_clear_to_color(al_map_rgb(0, 255, 0));
+                    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                     printf_s("CHUTE-VERDE, %d, %d\n", acaoP, acaoB);
                     printf_s("%s", combat(acaoP, acaoB));
                     printf_s("player: %d,bot %d\n", PL, BL);
-                    if (endgame(BL, PL))
-                        sair = true;
+                    endgame(BL, PL);
                 }
-                //A��O GANCHO azul
+                //AÇÃO GANCHO azul
                 else if (evento.mouse.x >= 480 &&
                     evento.mouse.x <= 580 &&
                     evento.mouse.y >= 380 &&
@@ -174,86 +228,205 @@ int boxe(ALLEGRO_DISPLAY* display)
                 {
                     acaoP = 2;
                     acaoB = rand() % 3 + 1;
-                    al_set_target_bitmap(player);
-                    al_clear_to_color(al_map_rgb(0, 0, 255));
+                    al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+
                     printf_s("GANCHO-AZUL, %d, %d\n", acaoP, acaoB);
                     printf_s("%s\n", combat(acaoP, acaoB));
                     printf_s("player: %d,bot %d\n", PL, BL);
-                    if (endgame(BL, PL))
-                        sair = true;
+                    endgame(BL, PL);
 
                 }
             }
+        }
 
-           // Limpamos a tela
-        al_clear_to_color(al_map_rgb(0, 0, 0));
+        // Limpamos a tela
 
-        // Colorimos o bitmap correspondente ao ret�ngulo central,
-        // com a cor condicionada ao conte�do da flag na_area_central
-        al_set_target_bitmap(player);
-        if (!na_player)
+
+        // Colorindo player de acordo com a acao
+
+        if (acaoP == 1)
         {
-            al_clear_to_color(al_map_rgb(255, 255, 255));
+            player = al_load_bitmap("jeb_p.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(player, 20, 123, 0);
+
+
+        }
+        else if (acaoP == 2)
+        {
+
+            player = al_load_bitmap("varios_p.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(player, 20, 122, 0);
+
+        }
+        else if (acaoP == 3)
+        {
+            player = al_load_bitmap("chute_p.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(player, 20, 122, 0);
+
         }
         else
         {
-            al_clear_to_color(al_map_rgb(0, 255, 0));
+
+            player = al_load_bitmap("base_pn.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(player, 20, 122, 0);
+
+
         }
 
-        // Colorimos o bitmap do bot�o de sair
+        //bot
+
+        if (acaoB == 1)
+        {
+            bot = al_load_bitmap("jeb_b.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(bot, 340, 122, 0);
+
+        }
+        else if (acaoB == 2)
+        {
+            bot = al_load_bitmap("varios_b.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(bot, 340, 122, 0);
 
 
-        al_set_target_bitmap(vida_p);
-        al_clear_to_color(al_map_rgb(255, 255, 255));
+        }
+        else if (acaoB == 3)
+        {
 
-        al_set_target_bitmap(vida_b);
-        al_clear_to_color(al_map_rgb(255, 255, 255));
+            bot = al_load_bitmap("chute_b.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(bot, 340, 122, 0);
 
-        al_set_target_bitmap(jeb);
-        al_clear_to_color(al_map_rgb(255, 0, 0));
+        }
+        else
+        {
 
-        al_set_target_bitmap(bot);
-        al_clear_to_color(al_map_rgb(255, 255, 255));
-
-        al_set_target_bitmap(chute);
-        al_clear_to_color(al_map_rgb(0, 255, 0));
-
-        al_set_target_bitmap(gancho);
-        al_clear_to_color(al_map_rgb(0, 0, 255));
+            bot = al_load_bitmap("base_b.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(bot, 340, 122, 0);
 
 
-        // Desenhamos os ret�ngulos na tela
+        }
+
+        //vida player
+
+
+        if (PL == 3)
+        {
+            vida_p = al_load_bitmap("vida3.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_p, 120, 60, 0);
+        }
+        else if (PL == 2)
+        {
+
+            vida_p = al_load_bitmap("vida2.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_p, 120, 60, 0);
+        }
+        else if (PL == 1)
+        {
+
+            vida_p = al_load_bitmap("vida1.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_p, 120, 60, 0);
+        }
+
+        else {
+
+
+            final = al_load_bitmap("botwin.png");
+            al_draw_bitmap(final, 0, 0, 0);
+            al_flip_display();
+            al_rest(3.0);
+            sair = true;
+        }
+
+        //vida bot
+
+
+        if (BL == 3)
+        {
+
+            vida_b = al_load_bitmap("vida3.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_b, 460, 60, 0);
+
+        }
+        else if (BL == 2)
+        {
+
+            vida_b = al_load_bitmap("vida2.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_b, 460, 60, 0);
+
+        }
+        else if (BL == 1)
+        {
+
+            vida_b = al_load_bitmap("vida1.png");
+            al_set_target_bitmap(al_get_backbuffer(display));
+            al_draw_bitmap(vida_b, 460, 60, 0);
+        }
+
+        else {
+
+            final = al_load_bitmap("playerwin.jpg");
+            al_draw_bitmap(final, 0, 0, 0);
+            al_flip_display();
+            sair = true;
+        }
+
+        // Colorimos o bitmap dos botões
+
+
+        //al_clear_to_color(al_map_rgb(255, 0, 0));
+
+
+        // Desenhamos os retângulos na tela
+
         al_set_target_bitmap(al_get_backbuffer(display));
 
-        al_draw_bitmap(player, 120, 120, 0);
 
-        al_draw_bitmap(vida_p, 120, 170, 0);
-
-        al_draw_bitmap(vida_b, 510, 170, 0);
-
-        al_draw_bitmap(bot, 510, 120, 0);
-
-        al_draw_bitmap(botao_sair, width - al_get_bitmap_width(botao_sair) - 10,
-            height - al_get_bitmap_height(botao_sair) - 10, 0);
 
         al_draw_bitmap(jeb, 80, 380, 0);
+        jeb = al_load_bitmap("jeb.png");
 
-        al_draw_bitmap(chute, 280, 380, 0);
+
 
         al_draw_bitmap(gancho, 480, 380, 0);
+        gancho = al_load_bitmap("combo.png");
 
 
+
+        al_draw_bitmap(chute, 280, 380, 0);
+        chute = al_load_bitmap("chute.png");
+
+        al_draw_bitmap(final, 0, 0, 0);
 
 
         // Atualiza a tela
         al_flip_display();
     }
 
-    // Desaloca os recursos utilizados na aplica��o
-    al_destroy_bitmap(botao_sair);
+
+    // Desaloca os recursos utilizados na aplicação
+
     al_destroy_bitmap(player);
+    al_destroy_bitmap(bot);
     al_destroy_display(display);
     al_destroy_event_queue(fila_eventos);
+    al_destroy_bitmap(jeb);
+    al_destroy_bitmap(chute);
+    al_destroy_bitmap(gancho);
+    al_destroy_audio_stream(musica);
+    al_destroy_sample(sample);
+    al_destroy_bitmap(background);
+    printf("Cheguei aqui");
 
     return 0;
 }

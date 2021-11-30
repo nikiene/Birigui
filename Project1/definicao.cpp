@@ -4,9 +4,6 @@
 #include <time.h>
 #include <stdio.h>
 
-
-int PL = 5, BL = 5;
-
 void initBot(Player& b) {
 	b.x = (width / 2) - 50;
 	b.y = height / 8;
@@ -136,11 +133,13 @@ void InitJogador(Jogador& jogador) {
 	jogador.status = VIVO;
 }
 
-bool endgame(int PL, int BL) {
-	if (PL == 0) {
-		return true;
+int endgame(int PL, int BL) {
+	if (PL <= 0) {
+		printf_s("você Ganhou! Deseja começar de novo?");
+		return 1;
 	}
-	else if (BL == 0) {
-		return true;
+	else if (BL <= 0) {
+		printf_s("você Perdeu! Deseja começar de novo?");
+		return 0;
 	}
 }

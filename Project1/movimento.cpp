@@ -198,11 +198,11 @@ int Collision(Obstaculo obstaculo[], Jogador& jogador) {
 
 const char* combat(int acaoP, int acaoB) {
 	if (acaoP == 1 && acaoB == 1) {
-		return "os golpes se encontram, mas n�o machucam nenhum dos lutadores!\n";
+		return "os golpes se encontram, mas não machucam nenhum dos lutadores!\n";
 	}
 	else if (acaoP == 1 && acaoB == 2) {
 		PL = PL - 1;
-		return "o jogador 1 levou um gancho em cheio!\n";
+		return "o jogador 1 levou um combo em cheio!\n";
 	}
 	else if (acaoP == 1 && acaoB == 3) {
 		BL = BL - 1;
@@ -210,10 +210,10 @@ const char* combat(int acaoP, int acaoB) {
 	}
 	else if (acaoP == 2 && acaoB == 1) {
 		BL = BL - 1;
-		return "o jogador 2 levou um gancho em cheio!\n";
+		return "o jogador 2 levou um combo em cheio!\n";
 	}
 	else if (acaoP == 2 && acaoB == 2) {
-		return "os golpes se encontram, mas n�o machucam nenhum dos lutadores!\n";
+		return "os golpes se encontram, mas não machucam nenhum dos lutadores!\n";
 	}
 	else if (acaoP == 2 && acaoB == 3) {
 		PL = PL - 1;
@@ -228,7 +228,17 @@ const char* combat(int acaoP, int acaoB) {
 		return "o jogador 1 da um chute no estomago do jogador 2\n";
 	}
 	else if (acaoP == 3 && acaoB == 3) {
-		return "os golpes se encontram, mas n�o machucam nenhum dos lutadores!\n";
+		return "os golpes se encontram, mas não machucam nenhum dos lutadores!\n";
 	}
 	return "error";
 };
+
+int game(void) {
+	printf("\n \n-- BOXE BIRIGUI --  \n Vida P1: %d \n Vida P2: %d", PL, BL);
+	printf("\nFaça uma ação\n 1 - Jeb\n 2 - gancho\n 3 - chute\n ação: ");
+	scanf_s("%d", &acaoP);
+	acaoB = rand() % 3 + 1;
+	printf("o jogador 2 usou a acao %d\n \n", acaoB);
+	printf("%s", combat(acaoP, acaoB));
+	return 0;
+}

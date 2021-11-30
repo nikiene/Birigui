@@ -37,3 +37,5 @@ void MakeJogadorJump(Jogador& jogador);
 int Collision(Obstaculo obstaculo[], Jogador& jogador);
 
 const char* combat(int acaoP, int acaoB);
+
+int game(void);

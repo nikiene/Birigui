@@ -2,10 +2,6 @@
 #include "structs.h"
 #include "constantes.h"
 
-extern int PL;
-extern int BL;
-
-
 void initBot(Player& b);
 
 void initPlayer(Player& p);
@@ -20,5 +16,5 @@ void UpdateObstaculo(Obstaculo obstaculo[], int size);
 
 void InitJogador(Jogador& jogador);
 
-bool endgame(int PL, int BL);
+int endgame(int PL, int BL);
 

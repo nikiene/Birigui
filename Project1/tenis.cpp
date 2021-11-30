@@ -126,13 +126,11 @@ int tenis(ALLEGRO_DISPLAY* display) {
 						ball.yDir *= -1;
 						ball.y -= 5;
 						moveBall(ball);
-						PlaySound(somBatida);
 						break;
 					case 2:
 						ball.yDir *= -1;
 						ball.y += 5;
 						moveBall(ball);
-						PlaySound(somBatida);
 						break;
 					case 4:
 						ball.xDir *= -1;
@@ -194,7 +192,7 @@ int tenis(ALLEGRO_DISPLAY* display) {
 		al_clear_to_color(al_map_rgb(0, 255, 0));
 		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce ganhou!");
 	}
-	else if (setsBot == 3) {
+	else {
 		al_clear_to_color(al_map_rgb(255, 0, 0));
 		al_draw_text(fontFinal, al_map_rgb(255, 255, 255), width / 2 - width / 4, height / 2, 0, "Voce perdeu!");
 	}
